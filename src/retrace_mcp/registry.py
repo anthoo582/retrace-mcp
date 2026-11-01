@@ -1,6 +1,6 @@
 """Registro de herramientas MCP.
 
-Concentra la instancia :class:`FastMCP` y el decorador ``@tool`` que añade un
+Concentra la instancia :class:`MCPServer` y el decorador ``@tool`` que añade un
 sobre de error estructurado a todas las herramientas. Cada herramienta devuelve
 un dict de datos plano; el decorador lo envuelve en ``{"ok": true, "data": ...}``
 y convierte las excepciones en ``{"ok": false, "error": {"code", "message"}}``.
@@ -11,18 +11,12 @@ from __future__ import annotations
 import functools
 from typing import Callable
 
-from mcp.server.fastmcp import FastMCP
+from mcp.server.mcpserver import MCPServer
 
 from .errors import RetraceError
 
-mcp = FastMCP(
-    "retrace",
-    instructions=(
-        "Motor de ingeniería inversa para Nintendo 64 y PlayStation 2. "
-        "Analiza ROMs (N64), ejecutables ELF (PS2), ensamblador MIPS "
-        "(R4300i / R5900), memoria, gráficos y audio. Trabaja siempre sobre "
-        "copias y no ejecuta código extraído de binarios."
-    ),
+mcp = MCPServer(
+    "retrace"
 )
 
 
@@ -41,4 +35,5 @@ def tool(func: Callable) -> Callable:
             return result
         return {"ok": True, "data": result}
 
-    return mcp.tool()(safe)
+    # Decorador de MCP v2
+    return mcp.tool(name=func.__name__)(safe)

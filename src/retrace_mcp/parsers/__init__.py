@@ -1,3 +1,5 @@
-"""Parsers de formatos binarios (ROM N64, ELF, MIPS)."""
+"""Parsers de formatos binarios."""
 
-__all__ = ["rom", "elf", "mips"]
+from . import elf, memory, rom
+
+__all__ = ["elf", "rom", "memory"]
