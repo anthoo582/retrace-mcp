@@ -7,9 +7,10 @@ audio. Permite que un agente de IA investigue un binario, entienda su
 arquitectura, identifique funciones y reconstruya estructuras con evidencia
 verificable.
 
-> **Estado:** v0.1.0 alpha. El núcleo (servidor + repository + ROM + ELF + MIPS)
-> está implementado. Las fases de memoria forense, gráficos/audio y knowledge
-> graph están planificadas (véase [Roadmap](AUDITORIA-FASE0.md)).
+> **Estado:** v0.2.0 beta. Fase 0 (repositorio + ROM + ELF + MIPS) y Fase 4
+> (memoria forense + crashes) completas. 24 herramientas, 40 tests pasando.
+> Migrado a MCP SDK v2 (MCPServer).
+> Fases pendientes: gráficos/audio (Fase 5), knowledge graph (Fase 6).
 
 ---
 
@@ -21,9 +22,11 @@ verificable.
 | ROM (N64) | `rom_identify_format`, `rom_inspect`, `rom_extract_metadata`, `rom_list_segments` | ✅ |
 | ELF (PS2/MIPS) | `elf_inspect`, `elf_list_sections`, `elf_list_segments`, `elf_list_symbols`, `elf_find_function` | ✅ |
 | MIPS | `mips_disassemble` | ✅ |
-| Memoria / crashes | planificado | 🚧 |
+| Memoria / crashes | `memory_analyze_dump`, `memory_inspect_region`, `memory_find_pointer`, `memory_check_alignment`, `memory_analyze_overlap`, `crash_analyze`, `crash_resolve_address` | ✅ |
 | Gráficos / audio | planificado | 🚧 |
 | Knowledge graph | planificado | 🚧 |
+
+**Total:** 24 herramientas implementadas
 
 Cada herramienta devuelve un JSON estructurado `{ "ok": true, "data": ... }` o
 `{ "ok": false, "error": { "code", "message" } }`.

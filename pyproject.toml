@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "retrace-mcp"
-version = "0.1.0"
+version = "0.2.0"
 description = "N64 / PS2 Reverse Engineering MCP: servidor Model Context Protocol para analizar ROMs de Nintendo 64, ejecutables ELF de PlayStation 2, ensamblador MIPS (R4300i / R5900), memoria, gráficos y audio."
 readme = "README.md"
 requires-python = ">=3.10"
