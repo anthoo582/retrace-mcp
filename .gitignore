@@ -14,3 +14,4 @@ build/
 .env
 .env.*
 tests/fixtures/generated/
+pytest-of-Pixel/
