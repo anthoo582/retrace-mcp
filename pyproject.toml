@@ -1,0 +1,59 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "retrace-mcp"
+version = "0.1.0"
+description = "N64 / PS2 Reverse Engineering MCP: servidor Model Context Protocol para analizar ROMs de Nintendo 64, ejecutables ELF de PlayStation 2, ensamblador MIPS (R4300i / R5900), memoria, gráficos y audio."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+authors = [{ name = "anthoo582" }]
+keywords = [
+  "mcp",
+  "model-context-protocol",
+  "reverse-engineering",
+  "nintendo-64",
+  "playstation-2",
+  "mips",
+  "r4300i",
+  "r5900",
+  "elf",
+  "rom",
+  "decompilation",
+  "forensics",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Topic :: Software Development :: Disassemblers",
+  "Topic :: Games/Entertainment",
+]
+dependencies = [
+  "mcp>=1.28.0",
+  "capstone>=5.0.1",
+  "pyelftools>=0.31",
+  "construct>=2.10.70",
+]
+
+[project.optional-dependencies]
+graphics = ["Pillow>=10.0"]
+radare2 = ["r2pipe>=1.9.0"]
+http = ["uvicorn>=0.30", "starlette>=0.37"]
+dev = ["pytest>=8.0", "pytest-asyncio>=0.23", "ruff>=0.5"]
+
+[project.scripts]
+retrace-mcp = "retrace_mcp.__main__:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/retrace_mcp"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
