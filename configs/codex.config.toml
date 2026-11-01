@@ -1,0 +1,11 @@
+# Fragmento para ~/.codex/config.toml (fusionar, NO sobrescribir el archivo).
+# Los nombres de servidor MCP en Codex son globales al host: usa un nombre único.
+
+[mcp_servers.retrace]
+command = "python"
+args = ["-m", "retrace_mcp", "--transport", "stdio"]
+cwd = "C:\\Users\\Pixel\\Desktop\\mcp-engenier-ps2-ports"
+
+[mcp_servers.retrace.env]
+RETRACE_TARGET = "."
+RETRACE_LOG_LEVEL = "INFO"

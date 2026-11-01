@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "retrace": {
+      "type": "stdio",
+      "command": "python",
+      "args": ["-m", "retrace_mcp", "--transport", "stdio"],
+      "env": {
+        "RETRACE_TARGET": ".",
+        "RETRACE_LOG_LEVEL": "INFO"
+      }
+    }
+  }
+}
