@@ -24,10 +24,10 @@ export function registerTool<Shape extends ZodRawShape>(
   inputSchema: Shape,
   handler: (args: { [K in keyof Shape]: Shape[K]["_output"] }) => Promise<ToolResult> | ToolResult
 ): void {
-  server.registerTool(
+  (server as any).registerTool(
     name,
     { description, inputSchema },
-    async (args) => {
+    async (args: any) => {
       try {
         const result = await withToolLog(name, async () => handler(args as never));
         const payload = isPayload(result) ? result : ok(result);

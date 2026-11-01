@@ -1,4 +1,5 @@
 import fs from "node:fs/promises";
+import type { Dirent } from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 import { config } from "../config.js";
@@ -110,7 +111,7 @@ async function walk(
   files: RepoFile[]
 ): Promise<void> {
   if (files.length >= maxFiles) return;
-  let entries: fs.Dirent[];
+  let entries: Dirent[];
   try {
     entries = await fs.readdir(current, { withFileTypes: true });
   } catch {

@@ -1,0 +1,56 @@
+#!/usr/bin/env node
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { registerSystemTools } from "./tools/system.js";
+import { registerRomTools } from "./tools/rom.js";
+import { registerElfTools } from "./tools/elf.js";
+import { registerMipsTools } from "./tools/mips.js";
+import { registerRepoTools } from "./tools/repo.js";
+import { registerMemoryTools } from "./tools/memory.js";
+import { registerGraphicsTools } from "./tools/graphics.js";
+import { registerAudioTools } from "./tools/audio.js";
+import { registerDecompTools } from "./tools/decomp.js";
+import { registerGraphTools } from "./tools/graph.js";
+import { logger } from "./logger.js";
+import { config } from "./config.js";
+
+async function main(): Promise<void> {
+  const server = new McpServer({
+    name: "retrace-mcp",
+    version: "0.2.0"
+  });
+
+  // Register all engineering subsystems
+  registerSystemTools(server);
+  registerRomTools(server);
+  registerElfTools(server);
+  registerMipsTools(server);
+  registerRepoTools(server);
+  registerMemoryTools(server);
+  registerGraphicsTools(server);
+  registerAudioTools(server);
+  registerDecompTools(server);
+  registerGraphTools(server);
+
+  const transport = new StdioServerTransport();
+
+  process.on("SIGINT", async () => {
+    logger.info("Retrace MCP shutting down on SIGINT");
+    await server.close();
+    process.exit(0);
+  });
+
+  process.on("SIGTERM", async () => {
+    logger.info("Retrace MCP shutting down on SIGTERM");
+    await server.close();
+    process.exit(0);
+  });
+
+  await server.connect(transport);
+  logger.info(`Retrace MCP server started on stdio (workspace: ${config.workspaceRoots.join(", ")})`);
+}
+
+main().catch((error) => {
+  console.error("Fatal error starting Retrace MCP:", error);
+  process.exit(1);
+});

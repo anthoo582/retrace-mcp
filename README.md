@@ -7,10 +7,11 @@ audio. Permite que un agente de IA investigue un binario, entienda su
 arquitectura, identifique funciones y reconstruya estructuras con evidencia
 verificable.
 
-> **Estado:** v0.2.0 beta. Fase 0 (repositorio + ROM + ELF + MIPS) y Fase 4
-> (memoria forense + crashes) completas. 24 herramientas, 40 tests pasando.
-> Migrado a MCP SDK v2 (MCPServer).
-> Fases pendientes: gráficos/audio (Fase 5), knowledge graph (Fase 6).
+> **Estado:** v0.2.0. Fase 0 a Fase 6 completas.
+> - Servidor TypeScript (`src/index.ts`): 34 herramientas registradas, Stdio transport, 20 tests vitest pasando.
+> - Servidor Python (`src/retrace_mcp`): 24 herramientas registradas, 40 tests pytest pasando.
+> - Diagnóstico: `npm run probe` (`scripts/probe.mjs`).
+> - Runtimes probados y verificados: Node.js >= 20 y Python >= 3.10.
 
 ---
 

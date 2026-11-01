@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "retrace-node": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["dist/index.js"],
+      "env": {
+        "RETRACE_WORKSPACE": ".",
+        "RETRACE_ALLOW_WRITE": "0"
+      }
+    }
+  }
+}
