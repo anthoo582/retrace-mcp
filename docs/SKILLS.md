@@ -1,6 +1,6 @@
 # Skills incluidas
 
-11 skills en `skills/`, leibles con `retrace_skill_list` y `retrace_skill_read`.
+12 skills en `skills/`, leibles con `retrace_skill_list` y `retrace_skill_read`.
 
 | Skill | Uso |
 | --- | --- |
@@ -15,6 +15,7 @@
 | `crash-forensics` | Registros de excepcion y corrupcion |
 | `decomp-workflow` | Desensamblado vs reconstruccion vs decomp verificable |
 | `build-validation` | Detectar y ejecutar builds de forma segura |
+| `n64-to-ps2-porting` | Flujo completo de portabilidad, traducción binaria segura y validación |
 
 ## Procedencia
 - Escritas para Retrace: `ps2-elf-forensics`, `cross-platform-porting`,

@@ -14,6 +14,7 @@ import { registerGraphTools } from "./tools/graph.js";
 import { registerReportTools } from "./tools/report.js";
 import { registerBuildTools } from "./tools/build.js";
 import { registerCompareTools } from "./tools/compare.js";
+import { registerPortTools } from "./tools/port.js";
 import { logger } from "./logger.js";
 import { config } from "./config.js";
 import { VERSION } from "./version.js";
@@ -38,6 +39,7 @@ async function main(): Promise<void> {
   registerReportTools(server);
   registerBuildTools(server);
   registerCompareTools(server);
+  registerPortTools(server);
 
   const transport = new StdioServerTransport();
 

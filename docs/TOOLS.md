@@ -1,6 +1,6 @@
 # Catalogo de tools (TypeScript)
 
-47 tools registradas en `src/index.ts`. Todas devuelven `{ ok, data|error, evidence }`.
+50 tools registradas en `src/index.ts`. Todas devuelven `{ ok, data|error, evidence }`.
 
 ## Sistema (4)
 `retrace_probe`, `retrace_skill_list`, `retrace_skill_read`, `retrace_limits`.
