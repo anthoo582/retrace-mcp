@@ -401,7 +401,7 @@ def architecture() -> Diagram:
         Node("c-codex", 736, 138, 300, 44, "Codex", "configs/codex.config.toml", style="cyan"),
         Node("transport", 300, 228, 500, 66, "Transporte MCP", "src/index.ts · McpServer + StdioServerTransport", style="orange"),
         Node("sidecar", 40, 326, 230, 66, "Sidecar Python (opcional)", "capstone · pyelftools", style="mint"),
-        Node("tools", 300, 326, 500, 66, "Registro de tools · 60", "src/tools/** · Zod + registerTool", style="orange", badge="60"),
+        Node("tools", 300, 326, 500, 66, "Registro de tools · 76", "src/tools/** · Zod + registerTool", style="orange", badge="76"),
         Node("external", 830, 326, 230, 66, "Analizadores externos", "binutils MIPS · radare2 · Ghidra", style="yellow"),
         Node("domain", 40, 430, 1020, 218, title="Dominio de análisis · puro, sin I/O de red", kind="group"),
         Node("d-parsers", 64, 468, 200, 64, "Parsers", "N64 ROM · ELF PS2", style="mint"),
@@ -420,7 +420,7 @@ def architecture() -> Diagram:
         Node("i-evidence", 538, 710, 220, 38, "core/evidence.ts", "", mono=True, title_size=13),
         Node("i-config", 770, 710, 266, 38, "config.ts + logger.ts", "", mono=True, title_size=13),
         Node("output", 280, 790, 540, 58, "Respuesta uniforme", "{ ok, data | error, evidence, limitations }", mono=True),
-        Node("title", 40, 24, 900, 60, "Arquitectura de Retrace MCP", "Servidor TypeScript + sidecar Python · v0.7.0", kind="title"),
+        Node("title", 40, 24, 900, 60, "Arquitectura de Retrace MCP", "Servidor TypeScript + sidecar Python · v1.0.0", kind="title"),
     ]
     edges = [
         Edge("e-clients", "clients", "transport", [(550, 197), (550, 228)], ORANGE),
@@ -536,7 +536,7 @@ def tool_map() -> Diagram:
                 ("Sistema", "4", "probe · skills · limits"),
                 ("Repositorio", "6", "inspect · search · references"),
                 ("Intake y toolchains", "3", "project_intake · rom_validate"),
-                ("Resumen", "60", "60 tools · 21 skills · salida tipada"),
+                ("Resumen", "76", "76 tools · 23 skills · salida tipada"),
             ],
         ),
         (
@@ -568,7 +568,7 @@ def tool_map() -> Diagram:
         ),
     ]
     nodes: list[Node] = [
-        Node("title", 30, 24, 1000, 60, "Mapa de capacidades", "15 grupos · 60 tools MCP · 21 skills", kind="title"),
+        Node("title", 30, 24, 1000, 60, "Mapa de capacidades", "15 grupos · 76 tools MCP · 23 skills", kind="title"),
     ]
     for column_index, (heading, cards) in enumerate(columns):
         x = 30 + column_index * 295

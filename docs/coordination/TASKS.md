@@ -5,7 +5,7 @@ Cada agente agrega y actualiza **solo sus propias filas**.
 
 | ID | Tarea | Dueño | Rama | Estado | Nota |
 |---|---|---|---|---|---|
-| F1-core | Servidor MCP STDIO, config, logger, registro y validación de tools | core | master | done | Servidor MCP TS funcional en `src/index.ts` con 34 tools |
+| F1-core | Servidor MCP STDIO, config, logger, registro y validación de tools | core | master | done | Servidor MCP TS funcional en `src/index.ts` con 76 tools |
 | F1-sidecar | Contrato TS↔Python + sidecar Python (RPC, env.probe, mips, elf, rom, memory) | analysis | work/analysis | claimed | sin dependencia del core |
 | F1-contracts | Catálogo de tools + protocolo del sidecar | analysis | work/analysis | claimed | |
 | F1-diag | Diagnóstico de instalación (toolchain, binutils, PCSX2, capstone) | analysis | work/analysis | claimed | `env.probe` / `scripts/probe.mjs` |
@@ -18,5 +18,6 @@ Cada agente agrega y actualiza **solo sus propias filas**.
 | F5-audio | N64 audio, SPU2/VAG | core | master | done | `src/audio/formats.ts` + `src/tools/audio.ts` |
 | F6-graph | Grafo de conocimiento y correlación | core | master | done | `src/knowledge/graph.ts` + `src/tools/graph.ts` |
 | F7-clients | Instaladores OpenCode / Claude Code / Codex | core | master | done | `configs/` y documentación multicliente |
-| F8-validate | Suite completa, seguridad, documentación | ambos | master | done | 20 tests TS (vitest) + 40 tests Python (pytest) |
+| F8-validate | Suite completa, seguridad, documentación | ambos | master | done | 75 tests TS (Vitest) + 40 tests Python (pytest) |
 | R1-research | Investigación de reversing y validación N64/PS2 | codex | work/research | done | Informe en reports/Portabilidad N64 a PS2.md |
+| R2-research-ecosystem | Ecosistema actual N64→PS2: reversing, recompilación y extracción | codex | work/research | done | Notas en research_notes/Arquitectura reversing N64 PS2/64-ecosystem.md |

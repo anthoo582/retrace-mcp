@@ -53,7 +53,7 @@ probar.
 
 | Componente | Estado |
 | --- | --- |
-| Servidor MCP TypeScript (`src/index.ts`) | **Implementación de referencia** · 71 tools · transporte stdio · 71 tests vitest |
+| Servidor MCP TypeScript (`src/index.ts`) | **Implementación de referencia** · 76 tools registradas · transporte stdio · 75 tests Vitest |
 | Sidecar Python (`src/retrace_mcp`, `src/python/retrace_analysis`) | Capstone + pyelftools · 40 tests pytest |
 | Skills de ingeniería (`skills/`) | 23 procedimientos especializados |
 | Diagramas | Fuentes `.drawio` + PNG en [`docs/diagrams`](docs/diagrams) |
@@ -120,12 +120,12 @@ disponible, la respuesta lo declara en vez de degradar silenciosamente.
 ## Capacidades y herramientas
 
 <div align="center">
-  <img src="docs/diagrams/tool-map.png" alt="Mapa de capacidades: grupos y 71 herramientas MCP" width="100%" />
+  <img src="docs/diagrams/tool-map.png" alt="Mapa de capacidades: grupos y 76 herramientas MCP" width="100%" />
 </div>
 
 <p align="center"><sub>Fuente editable: <a href="docs/diagrams/tool-map.drawio">tool-map.drawio</a></sub></p>
 
-**71 tools MCP** agrupadas por subsistema:
+**76 tools MCP** agrupadas por subsistema:
 
 | Subsistema | Herramientas | Nº |
 | --- | --- | --- |
@@ -353,7 +353,7 @@ versión, roots, política de escritura y adaptadores disponibles.
 
 ```text
 src/
-  index.ts              # arranque MCP y registro de las 77 tools
+  index.ts              # arranque MCP y registro de las 76 tools
   tools/                # validación y superficie MCP por subsistema
   parsers/              # N64 ROM, ELF, símbolos
   mips/                 # desensamblado, análisis y reconstrucción
@@ -386,7 +386,8 @@ scripts/                # probe y generador de diagramas
 | Documento | Contenido |
 | --- | --- |
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Capas, flujo de una tool y modelo de certeza |
-| [`docs/TOOLS.md`](docs/TOOLS.md) | Catálogo de las 77 tools y política de escritura |
+| [`docs/TOOLS.md`](docs/TOOLS.md) | Catálogo de las 76 tools y política de escritura |
+| [`docs/VERIFIED-STATUS.md`](docs/VERIFIED-STATUS.md) | Conteos reproducibles, entorno y límites conocidos |
 | [`docs/SKILLS.md`](docs/SKILLS.md) | Las 23 skills y su procedencia |
 | [`docs/COMPARISON_ENGINE.md`](docs/COMPARISON_ENGINE.md) | Normalización, métricas y niveles de equivalencia |
 | [`docs/KNOWLEDGE_GRAPH.md`](docs/KNOWLEDGE_GRAPH.md) | Nodos, aristas e ingestión |
