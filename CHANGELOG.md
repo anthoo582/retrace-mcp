@@ -28,6 +28,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `project_autopilot` para planificar y registrar el pipeline N64→PS2 según adaptadores disponibles.
 - `project_state` para persistir hashes, capacidades, etapas, bloqueos y gates humanos.
 
+## [1.0.0] - 2026-11-02
+
+### Added
+- `infer_variables`, `infer_structs`, `suggest_variable_names` y `validate_variable_map`.
+- Skill `variable-recovery-and-abi` para inferencia de variables, structs y mapeos ABI con evidencia.
+
 ## [0.5.0] - 2026-11-02
 
 ### Added

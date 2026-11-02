@@ -31,6 +31,7 @@ Owners update this file. One line per tool, only when it is implemented AND test
 | analyze_n64_rom, split_rom, ghidra_import, recompile_rom, generate_ps2_project, build_ps2, save_finding | src/tools/automation.ts | codex | tests/ts/automation.test.ts |
 | ghidra_analyze, decompile_function, diff_function, create_ps2_project, run_pcsx2 | src/tools/automation.ts | codex | tests/ts/automation.test.ts |
 | project_autopilot, project_state | src/port/autopilot.ts, src/tools/autopilot.ts | codex | tests/ts/autopilot.test.ts |
+| infer_variables, infer_structs, suggest_variable_names, validate_variable_map | src/port/variables.ts, src/tools/variables.ts | codex | tests/ts/variables.test.ts |
 
 ## In progress (claim before starting)
 

@@ -1,6 +1,6 @@
 # Catalogo de tools (TypeScript)
 
-67 tools registradas en `src/index.ts`. Todas devuelven `{ ok, data|error, evidence }`.
+71 tools registradas en `src/index.ts`. Todas devuelven `{ ok, data|error, evidence }`.
 
 ## Sistema (4)
 `retrace_probe`, `retrace_skill_list`, `retrace_skill_read`, `retrace_limits`.
@@ -53,6 +53,9 @@
 
 ## Autopilot (2)
 `project_autopilot`, `project_state`.
+
+## Variables y ABI (4)
+`infer_variables`, `infer_structs`, `suggest_variable_names`, `validate_variable_map`.
 
 ## Politica de escritura
 Solo `decomp_config_apply_changes`, `build_run`, `split_rom`, `ghidra_import`,
