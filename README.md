@@ -6,7 +6,7 @@
 
 **Ingeniería inversa verificable de Nintendo 64 y PlayStation 2 dentro de tu agente de IA.**
 
-[![Version](https://img.shields.io/badge/version-0.7.0-ff9a3d?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.8.0-ff9a3d?style=flat-square)](CHANGELOG.md)
 [![MCP](https://img.shields.io/badge/protocol-MCP%20stdio-59f2b0?style=flat-square)](https://modelcontextprotocol.io)
 [![Node](https://img.shields.io/badge/Node.js-%E2%89%A520-59f2b0?style=flat-square)](package.json)
 [![Python](https://img.shields.io/badge/Python-%E2%89%A53.10-59f2b0?style=flat-square)](pyproject.toml)
@@ -53,7 +53,7 @@ probar.
 
 | Componente | Estado |
 | --- | --- |
-| Servidor MCP TypeScript (`src/index.ts`) | **Implementación de referencia** · 60 tools · transporte stdio · 66 tests vitest |
+| Servidor MCP TypeScript (`src/index.ts`) | **Implementación de referencia** · 65 tools · transporte stdio · 66 tests vitest |
 | Sidecar Python (`src/retrace_mcp`, `src/python/retrace_analysis`) | Capstone + pyelftools · 40 tests pytest |
 | Skills de ingeniería (`skills/`) | 21 procedimientos especializados |
 | Diagramas | Fuentes `.drawio` + PNG en [`docs/diagrams`](docs/diagrams) |
@@ -120,12 +120,12 @@ disponible, la respuesta lo declara en vez de degradar silenciosamente.
 ## Capacidades y herramientas
 
 <div align="center">
-  <img src="docs/diagrams/tool-map.png" alt="Mapa de capacidades: 15 grupos y 60 herramientas MCP" width="100%" />
+  <img src="docs/diagrams/tool-map.png" alt="Mapa de capacidades: grupos y 65 herramientas MCP" width="100%" />
 </div>
 
 <p align="center"><sub>Fuente editable: <a href="docs/diagrams/tool-map.drawio">tool-map.drawio</a></sub></p>
 
-**60 tools MCP** agrupadas por subsistema:
+**65 tools MCP** agrupadas por subsistema:
 
 | Subsistema | Herramientas | Nº |
 | --- | --- | --- |
@@ -137,7 +137,7 @@ disponible, la respuesta lo declara en vez de degradar silenciosamente.
 | Comparación N64/PS2 | `compare_functions`, `compare_rank`, `equivalence_record`, `equivalence_list` | 4 |
 | Portabilidad | `port_project_plan`, `binary_translate`, `port_validate_translation` | 3 |
 | Intake y toolchains | `project_intake`, `rom_validate`, `toolchain_probe` | 3 |
-| Orquestación MVP | `analyze_n64_rom`, `split_rom`, `ghidra_import`, `recompile_rom`, `generate_ps2_project`, `build_ps2`, `save_finding` | 7 |
+| Orquestación | `analyze_n64_rom`, `split_rom`, `ghidra_import`, `ghidra_analyze`, `decompile_function`, `recompile_rom`, `diff_function`, `generate_ps2_project`, `create_ps2_project`, `build_ps2`, `run_pcsx2`, `save_finding` | 12 |
 | Memoria y crashes | `memory_inspect_region`, `memory_check_alignment`, `memory_analyze_overlap`, `crash_analyze` | 4 |
 | Gráficos | `texture_inspect`, `texture_analyze_palette`, `texture_decode_n64`, `texture_decode_ps2` | 4 |
 | Audio | `audio_inspect`, `audio_decode_vag_block`, `audio_decode_file` | 3 |

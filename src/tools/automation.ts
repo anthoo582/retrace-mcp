@@ -12,6 +12,8 @@ import { analyzeBuild } from "../build/analysis.js";
 import { runBuild, type AllowedBuildCommand } from "../build/run.js";
 import { readFileCapped, requireWriteAccess, resolveInWorkspace, writeFileGuarded } from "../security/paths.js";
 import { registerTool } from "./helpers.js";
+import { disassemble } from "../mips/disasm.js";
+import { compareInstructions } from "../compare/engine.js";
 
 async function sha256(bytes: Buffer): Promise<string> {
   const { createHash } = await import("node:crypto");
@@ -97,6 +99,20 @@ export function registerAutomationTools(server: McpServer): void {
     return ok({ planned: false, project: projectDir, command: result.command, args: result.args, stdout: result.stdout, stderr: result.stderr });
   });
 
+  registerTool(server, "ghidra_analyze", "Run the same reproducible Ghidra Headless import/analyze step under an explicit tool name for pipeline orchestration.", {
+    inputPath: z.string(),
+    project: z.string(),
+    apply: z.boolean().optional()
+  }, async ({ inputPath, project, apply }) => {
+    const input = resolveInWorkspace(inputPath);
+    const projectDir = resolveInWorkspace(project, false);
+    const args = [projectDir, path.basename(projectDir), "-import", input, "-overwrite"];
+    if (!apply) return ok({ planned: true, adapter: "ghidra", args, note: "Set apply=true to run Ghidra Headless." });
+    requireWriteAccess(projectDir, true);
+    const { result } = await runExternal("ghidra", args, path.dirname(input), 1800000);
+    return ok({ project: projectDir, command: result.command, args: result.args, stdout: result.stdout, stderr: result.stderr });
+  });
+
   registerTool(server, "recompile_rom", "Run the installed N64Recomp CLI with an authorized config. Returns generated output and diagnostics; it never claims a PS2 port.", {
     romPath: z.string(),
     configPath: z.string(),
@@ -111,6 +127,37 @@ export function registerAutomationTools(server: McpServer): void {
     requireWriteAccess(out, true);
     const { result } = await runExternal("n64recomp", args, path.dirname(input), 1800000);
     return ok({ planned: false, command: result.command, args: result.args, stdout: result.stdout, stderr: result.stderr, outputDir, files: await tree(out) });
+  });
+
+  registerTool(server, "decompile_function", "Run m2c over an authorized assembly file and return candidate C plus raw diagnostics. Candidate code is never treated as recovered source.", {
+    assemblyPath: z.string(),
+    address: z.string().optional(),
+    cwd: z.string().optional()
+  }, async ({ assemblyPath, address, cwd }) => {
+    const input = resolveInWorkspace(assemblyPath);
+    const working = cwd ? resolveInWorkspace(cwd) : path.dirname(input);
+    const { result } = await runExternal("m2c", [input], working, 600000);
+    return ok({ address, assemblyPath, candidateC: result.stdout, stderr: result.stderr, status: "candidate", limitations: ["m2c output is a reconstruction aid, not proof of original source or PS2 equivalence."] });
+  });
+
+  registerTool(server, "diff_function", "Compare two MIPS function byte strings using the internal canonical diff engine and return an explicit unverified match level.", {
+    targetHex: z.string(),
+    candidateHex: z.string(),
+    arch: z.enum(["r4300i", "r5900"]).optional(),
+    targetAddress: z.number().optional(),
+    candidateAddress: z.number().optional()
+  }, async ({ targetHex, candidateHex, arch, targetAddress, candidateAddress }) => {
+    const clean = (hex: string) => hex.replace(/[^0-9a-f]/gi, "");
+    const targetBytes = Buffer.from(clean(targetHex), "hex");
+    const candidateBytes = Buffer.from(clean(candidateHex), "hex");
+    const profile = arch ?? "r4300i";
+    const endian = profile === "r4300i" ? "big" : "little";
+    const [target, candidate] = await Promise.all([
+      disassemble(targetBytes, targetAddress ?? 0x80000400, { arch: profile, endian }),
+      disassemble(candidateBytes, candidateAddress ?? 0x00100000, { arch: profile, endian })
+    ]);
+    const comparison = compareInstructions(target.instructions, candidate.instructions);
+    return ok({ comparison, status: "unverified", notes: ["Instruction similarity does not prove semantic, runtime or gameplay equivalence."] });
   });
 
   registerTool(server, "generate_ps2_project", "Generate a minimal PS2 port scaffold with CMake, a C entrypoint and an explicit pending-layer checklist.", {
@@ -128,6 +175,34 @@ export function registerAutomationTools(server: McpServer): void {
       written.push(await writeFileGuarded(target, content, true));
     }
     return ok({ planned: false, projectName, outputDir, written, warning: "This is a scaffold; no N64 game code or assets were converted." });
+  });
+
+  registerTool(server, "create_ps2_project", "Alias with an explicit pipeline name for generating the guarded PS2SDK project scaffold.", {
+    projectName: z.string().min(1).max(80),
+    outputDir: z.string(),
+    apply: z.boolean().optional()
+  }, async ({ projectName, outputDir, apply }) => {
+    const root = resolveInWorkspace(outputDir, false);
+    const files = buildPs2Template(projectName);
+    if (!apply) return ok({ planned: true, outputDir, files: Object.keys(files), note: "Set apply=true and RETRACE_ALLOW_WRITE=1 to create the scaffold." });
+    requireWriteAccess(root, true);
+    const written = [];
+    for (const [relative, content] of Object.entries(files)) written.push(await writeFileGuarded(path.join(root, relative), content, true));
+    return ok({ planned: false, projectName, outputDir, written, warning: "Scaffold only; PS2SDK toolchain configuration and game backend remain pending." });
+  });
+
+  registerTool(server, "run_pcsx2", "Launch an authorized PS2 ELF with the installed PCSX2 adapter after explicit confirmation; captures are not claimed unless the configured CLI emits them.", {
+    elfPath: z.string(),
+    args: z.array(z.string()).max(32).optional(),
+    timeoutMs: z.number().int().positive().max(1800000).optional(),
+    confirm: z.boolean()
+  }, async ({ elfPath, args, timeoutMs, confirm }) => {
+    const elf = resolveInWorkspace(elfPath);
+    const safeArgs = args ?? [];
+    if (safeArgs.some((arg) => /[;&|<>$`\r\n]/.test(arg))) throw new Error("PCSX2 arguments contain shell metacharacters.");
+    if (!confirm) return ok({ planned: true, adapter: "pcsx2", args: [elf, ...safeArgs], note: "Set confirm=true to launch PCSX2." });
+    const { result } = await runExternal("pcsx2", [elf, ...safeArgs], path.dirname(elf), timeoutMs ?? 600000);
+    return ok({ command: result.command, args: result.args, stdout: result.stdout, stderr: result.stderr, timedOut: result.timedOut, status: result.code === 0 ? "completed" : "failed" });
   });
 
   registerTool(server, "build_ps2", "Build a PS2 port workspace through the existing allowlisted build runner. Requires explicit confirmation and RETRACE_ALLOW_WRITE=1.", {

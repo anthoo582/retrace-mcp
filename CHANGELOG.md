@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - 9 skills especializadas para RSP/RDP, GS/VU, assets, audio, DMA/timing, Ghidra Headless, recompilación, validación y procedencia/licencias.
 
+## [0.8.0] - 2026-11-02
+
+### Added
+- `ghidra_analyze`, `decompile_function`, `diff_function`, `create_ps2_project` y `run_pcsx2`.
+- Diferencias MIPS con estado `unverified` y pseudocódigo m2c marcado como candidato.
+
 ## [0.5.0] - 2026-11-02
 
 ### Added

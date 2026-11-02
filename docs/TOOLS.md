@@ -1,6 +1,6 @@
 # Catalogo de tools (TypeScript)
 
-60 tools registradas en `src/index.ts`. Todas devuelven `{ ok, data|error, evidence }`.
+65 tools registradas en `src/index.ts`. Todas devuelven `{ ok, data|error, evidence }`.
 
 ## Sistema (4)
 `retrace_probe`, `retrace_skill_list`, `retrace_skill_read`, `retrace_limits`.
@@ -46,9 +46,10 @@
 ## Intake y toolchains (3)
 `project_intake`, `rom_validate`, `toolchain_probe`.
 
-## Orquestación MVP (7)
-`analyze_n64_rom`, `split_rom`, `ghidra_import`, `recompile_rom`,
-`generate_ps2_project`, `build_ps2`, `save_finding`.
+## Orquestación (12)
+`analyze_n64_rom`, `split_rom`, `ghidra_import`, `ghidra_analyze`,
+`decompile_function`, `recompile_rom`, `diff_function`, `generate_ps2_project`,
+`create_ps2_project`, `build_ps2`, `run_pcsx2`, `save_finding`.
 
 ## Politica de escritura
 Solo `decomp_config_apply_changes`, `build_run`, `split_rom`, `ghidra_import`,
