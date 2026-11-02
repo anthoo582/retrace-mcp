@@ -11,7 +11,7 @@ export function errorCode(error: unknown): string {
   if (error instanceof AdapterUnavailableError) return "dependency_missing";
   if (error instanceof PathSecurityError) return "path_denied";
   if (error instanceof Error && /ENOENT/.test(error.message)) return "file_not_found";
-  if (error instanceof Error && /Unrecognized N64 ROM magic|Missing ELF magic|too small/.test(error.message)) {
+  if (error instanceof Error && /Unrecognized N64 ROM magic|Missing ELF magic|Unsupported ELF|Invalid ELF|ELF .*exceeds|ELF .*truncated|too small/.test(error.message)) {
     return "invalid_binary";
   }
   return "tool_error";

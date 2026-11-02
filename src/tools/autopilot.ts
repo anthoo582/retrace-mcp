@@ -9,6 +9,8 @@ import { ok } from "../core/evidence.js";
 import { N64Rom } from "../parsers/n64rom.js";
 import { readFileCapped, resolveInWorkspace, writeFileGuarded } from "../security/paths.js";
 import { buildAutopilotPlan, hashState } from "../port/autopilot.js";
+import type { RunManifest } from "../port/autopilot.js";
+import { VERSION } from "../version.js";
 import { registerTool } from "./helpers.js";
 
 function statePath(root: string): string {
@@ -37,10 +39,28 @@ export function registerAutopilotTools(server: McpServer): void {
     const romFile = resolveInWorkspace(romPath);
     const romBytes = await readFileCapped(romFile);
     const rom = N64Rom.fromBuffer(romBytes);
+    const configFile = configPath ? resolveInWorkspace(configPath) : undefined;
+    const configBytes = configFile ? await readFileCapped(configFile) : undefined;
     const adapters = await detectAdapters(refresh === true);
     const capabilities = Object.fromEntries(adapters.map((adapter) => [adapter.id, adapter.available]));
     const plan = buildAutopilotPlan(capabilities, Boolean(configPath));
-    const state = { schema: "retrace.project-state.v1", updatedAt: new Date().toISOString(), root, romPath, romSha256: crypto.createHash("sha256").update(romBytes).digest("hex"), rom: { format: rom.format, header: rom.header, checksum: rom.checksum }, capabilities, plan };
+    const romSha256 = crypto.createHash("sha256").update(romBytes).digest("hex");
+    const configSha256 = configBytes ? crypto.createHash("sha256").update(configBytes).digest("hex") : undefined;
+    const manifest: RunManifest = {
+      schema: "retrace.run-manifest.v1",
+      generatedAt: new Date().toISOString(),
+      retraceVersion: VERSION,
+      runtime: { node: process.version, platform: process.platform, arch: process.arch },
+      inputs: [{ path: romFile, sha256: romSha256, kind: "n64-rom" }, ...(configFile && configSha256 ? [{ path: configFile, sha256: configSha256, kind: "pipeline-config" }] : [])],
+      tools: adapters.map(({ id, command, available, version }) => ({ id, command, available, version })),
+      configuration: { projectRoot: root, ...(configFile ? { configPath: configFile, configSha256 } : {}) },
+      commands: [],
+      artifacts: [],
+      evidence: ["Input hashes were calculated from bytes read under the configured workspace root."],
+      warnings: [],
+      limitations: ["The manifest records gates and provenance; it does not claim a successful port or gameplay equivalence."]
+    };
+    const state = { schema: "retrace.project-state.v1", updatedAt: manifest.generatedAt, root, romPath, romSha256, rom: { format: rom.format, header: rom.header, checksum: rom.checksum }, capabilities, plan, manifest };
     if (mode !== "execute") return ok({ mode: "plan", ...state, write: { performed: false, path: statePath(root) } });
     if (!confirm) throw new Error("Set confirm=true before executing the autopilot pipeline.");
     const target = statePath(root);

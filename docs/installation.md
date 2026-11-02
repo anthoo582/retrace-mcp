@@ -46,7 +46,18 @@ node dist/index.js
 El servidor habla MCP por stdio; no abre un puerto salvo que definas
 `RETRACE_HTTP_PORT`.
 
-## 4. Sidecar Python
+## 4. Python bridge y servidor alternativo
+
+La instalación oficial es el servidor MCP TypeScript (`dist/index.js`). El
+proceso Python que usa para Capstone es un bridge auxiliar, no un segundo servidor
+MCP requerido: se ejecuta bajo demanda desde `src/mips/py/mips_disasm.py` y exige
+que `RETRACE_PYTHON` tenga `capstone` instalado.
+
+El paquete `src/retrace_mcp` conserva un servidor Python alternativo para
+compatibilidad e investigación. No es el camino principal documentado y no debe
+configurarse con el mismo nombre `retrace-mcp` que el servidor TypeScript.
+
+Para instalar ese servidor alternativo explícitamente:
 
 Windows (PowerShell):
 
@@ -168,4 +179,4 @@ npm test
 python -m pytest tests -q
 ```
 
-Resultado verificado: 75 tests Vitest y 40 tests pytest en verde.
+Resultado verificado: 78 tests Vitest y 40 tests pytest en verde.

@@ -4,6 +4,7 @@ import {
   normalizeToBigEndian,
   parseHeader
 } from "../../src/parsers/n64rom.js";
+import { ElfFile } from "../../src/parsers/elf.js";
 import { parseSymbolText, compareSymbolTables, symbolAt } from "../../src/parsers/symbols.js";
 
 describe("parsers / n64rom", () => {
@@ -69,5 +70,35 @@ describe("parsers / symbols", () => {
     expect(diff.onlyInB.map((s) => s.name)).toContain("func_c");
     expect(diff.moved.some((c) => c.name === "func_b")).toBe(true);
     expect(diff.onlyInA.length).toBe(0);
+  });
+});
+
+describe("parsers / ELF validation", () => {
+  it("requires the complete ELF64 header instead of parsing it as ELF32", () => {
+    const truncated = Buffer.alloc(52);
+    truncated.set([0x7f, 0x45, 0x4c, 0x46, 2, 1, 1], 0);
+
+    expect(() => ElfFile.fromBuffer(truncated)).toThrow(/ELF64 header/);
+  });
+
+  it("rejects unknown ELF class and data encoding values", () => {
+    const invalidClass = Buffer.alloc(16);
+    invalidClass.set([0x7f, 0x45, 0x4c, 0x46, 3, 1, 1], 0);
+    const invalidData = Buffer.alloc(16);
+    invalidData.set([0x7f, 0x45, 0x4c, 0x46, 1, 3, 1], 0);
+
+    expect(() => ElfFile.fromBuffer(invalidClass)).toThrow(/Unsupported ELF class/);
+    expect(() => ElfFile.fromBuffer(invalidData)).toThrow(/Unsupported ELF data/);
+  });
+
+  it("rejects section tables that extend past the input file", () => {
+    const truncated = Buffer.alloc(52);
+    truncated.set([0x7f, 0x45, 0x4c, 0x46, 1, 1, 1], 0);
+    truncated.writeUInt16LE(52, 40); // e_ehsize
+    truncated.writeUInt32LE(52, 32); // e_shoff
+    truncated.writeUInt16LE(40, 46); // e_shentsize
+    truncated.writeUInt16LE(1, 48); // e_shnum
+
+    expect(() => ElfFile.fromBuffer(truncated)).toThrow(/section-header table/);
   });
 });

@@ -47,6 +47,8 @@
     "start": "node dist/index.js",
     "dev": "tsx src/index.ts",
     "probe": "node scripts/probe.mjs",
+    "generate:tools": "npm run build && node scripts/generate-tool-catalog.mjs",
+    "verify:docs": "npm run build && node scripts/generate-tool-catalog.mjs --check",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc -p tsconfig.json --noEmit",

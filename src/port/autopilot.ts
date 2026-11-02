@@ -21,6 +21,21 @@ export type AutopilotPlan = {
   policy: { readOnlyByDefault: true; originalsPreserved: true; noRomBiosIsoAcquisition: true };
 };
 
+export type RunManifest = {
+  schema: "retrace.run-manifest.v1";
+  generatedAt: string;
+  retraceVersion: string;
+  runtime: { node: string; platform: string; arch: string };
+  inputs: Array<{ path: string; sha256: string; kind: string }>;
+  tools: Array<{ id: string; command: string; available: boolean; version?: string }>;
+  configuration: { projectRoot: string; configPath?: string; configSha256?: string };
+  commands: Array<{ command: string; args: string[]; exitCode?: number; stdout?: string; stderr?: string }>;
+  artifacts: Array<{ path: string; sha256?: string; kind: string }>;
+  evidence: string[];
+  warnings: string[];
+  limitations: string[];
+};
+
 export function buildAutopilotPlan(capabilities: Record<string, boolean>, hasConfig: boolean): AutopilotPlan {
   const available = (id: string) => capabilities[id] === true;
   const stages: AutopilotStage[] = [

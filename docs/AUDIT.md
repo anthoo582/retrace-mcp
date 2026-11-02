@@ -4,7 +4,7 @@
 
 - Versión declarada: `1.0.0` en `package.json` y `src/version.ts`.
 - `npm run typecheck`: limpio.
-- `npm test`: 75 tests Vitest en 21 archivos, todos pasan.
+- `npm test`: 78 tests Vitest en 21 archivos, todos pasan.
 - `python -m pytest tests -q`: 40 tests, todos pasan.
 - Servidor TypeScript: 76 tools registradas en `src/index.ts`.
 - `npm run probe`: 4 de 33 adaptadores disponibles en el entorno auditado.

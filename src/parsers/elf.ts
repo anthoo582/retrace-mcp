@@ -239,12 +239,21 @@ export class ElfFile {
 
   private parseHeader(): ElfHeader {
     const buf = this.buffer;
-    if (buf.length < 52) throw new Error("File too small to be an ELF image");
+    if (buf.length < 16) throw new Error("File too small to contain an ELF identification header");
     if (buf[0] !== 0x7f || buf[1] !== 0x45 || buf[2] !== 0x4c || buf[3] !== 0x46) {
       throw new Error("Missing ELF magic (0x7f ELF)");
     }
-    const elfClass = buf[4] === 2 ? 64 : 32;
-    const endian = buf[5] === 2 ? "big" : "little";
+    const elfClass: ElfClass = buf[4] === 1 ? 32 : buf[4] === 2 ? 64 : (() => {
+      throw new Error(`Unsupported ELF class: ${buf[4]}`);
+    })();
+    const endian: ElfEndian = buf[5] === 1 ? "little" : buf[5] === 2 ? "big" : (() => {
+      throw new Error(`Unsupported ELF data encoding: ${buf[5]}`);
+    })();
+    if (buf[6] !== 1) throw new Error(`Unsupported ELF identification version: ${buf[6]}`);
+    const minimumHeaderSize = elfClass === 64 ? 64 : 52;
+    if (buf.length < minimumHeaderSize) {
+      throw new Error(`File too small for an ELF${elfClass} header (${buf.length} < ${minimumHeaderSize})`);
+    }
     const is64 = elfClass === 64;
     const header: ElfHeader = {
       elfClass,
@@ -293,6 +302,17 @@ export class ElfFile {
       header.shnum = this.u16(48);
       header.shstrndx = this.u16(50);
     }
+    if (header.ehsize !== minimumHeaderSize) {
+      throw new Error(`Invalid ELF${elfClass} header size: ${header.ehsize} (expected ${minimumHeaderSize})`);
+    }
+    const expectedProgramHeaderSize = is64 ? 56 : 32;
+    const expectedSectionHeaderSize = is64 ? 64 : 40;
+    if (header.phnum > 0 && header.phentsize < expectedProgramHeaderSize) {
+      throw new Error(`Invalid ELF program-header entry size: ${header.phentsize}`);
+    }
+    if (header.shnum > 0 && header.shentsize < expectedSectionHeaderSize) {
+      throw new Error(`Invalid ELF section-header entry size: ${header.shentsize}`);
+    }
     return header;
   }
 
@@ -302,12 +322,17 @@ export class ElfFile {
     const sections: ElfSection[] = [];
     const is64 = h.elfClass === 64;
     const size = is64 ? 64 : 40;
-    const count = h.shnum === 0 && h.shoff !== 0 ? this.u32(h.shoff + (is64 ? 32 : 20)) : h.shnum;
-    const offsetOf = (index: number) => h.shoff + index * (h.shentsize || size);
+    const count = h.shnum;
+    const entrySize = h.shentsize || size;
+    const tableEnd = h.shoff + count * entrySize;
+    if (!Number.isSafeInteger(tableEnd) || h.shoff > this.buffer.length || tableEnd > this.buffer.length) {
+      throw new Error("ELF section-header table exceeds the input file");
+    }
+    const offsetOf = (index: number) => h.shoff + index * entrySize;
     const raw: Array<Omit<ElfSection, "name" | "typeName" | "flagNames" | "executable" | "allocated">> = [];
     for (let i = 0; i < count; i += 1) {
       const base = offsetOf(i);
-      if (base + (h.shentsize || size) > this.buffer.length) break;
+      if (base + entrySize > this.buffer.length) throw new Error("ELF section-header entry is truncated");
       const section =
         is64
           ? {
@@ -370,9 +395,14 @@ export class ElfFile {
     const is64 = h.elfClass === 64;
     const size = is64 ? 56 : 32;
     const segments: ElfSegment[] = [];
+    const entrySize = h.phentsize || size;
+    const tableEnd = h.phoff + h.phnum * entrySize;
+    if (!Number.isSafeInteger(tableEnd) || h.phoff > this.buffer.length || tableEnd > this.buffer.length) {
+      throw new Error("ELF program-header table exceeds the input file");
+    }
     for (let i = 0; i < h.phnum; i += 1) {
-      const base = h.phoff + i * (h.phentsize || size);
-      if (base + (h.phentsize || size) > this.buffer.length) break;
+      const base = h.phoff + i * entrySize;
+      if (base + entrySize > this.buffer.length) throw new Error("ELF program-header entry is truncated");
       const segment: ElfSegment = is64
         ? {
             index: i,
@@ -514,6 +544,9 @@ export class ElfFile {
 
   sectionData(section: ElfSection): Buffer {
     if (section.typeName === "NOBITS") return Buffer.alloc(0);
+    if (section.offset > this.buffer.length || section.size > this.buffer.length - section.offset) {
+      throw new Error(`ELF section ${section.index} exceeds the input file`);
+    }
     return this.buffer.subarray(section.offset, section.offset + section.size);
   }
 

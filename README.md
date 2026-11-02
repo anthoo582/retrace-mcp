@@ -10,7 +10,7 @@
 [![MCP](https://img.shields.io/badge/protocol-MCP%20stdio-59f2b0?style=flat-square)](https://modelcontextprotocol.io)
 [![Node](https://img.shields.io/badge/Node.js-%E2%89%A520-59f2b0?style=flat-square)](package.json)
 [![Python](https://img.shields.io/badge/Python-%E2%89%A53.10-59f2b0?style=flat-square)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-75%20TS%20%2B%2040%20Python-ff9a3d?style=flat-square)](tests)
+[![Tests](https://img.shields.io/badge/tests-78%20TS%20%2B%2040%20Python-ff9a3d?style=flat-square)](tests)
 [![License](https://img.shields.io/badge/license-MIT-9fb0d0?style=flat-square)](LICENSE)
 
 </div>
@@ -53,8 +53,9 @@ probar.
 
 | Componente | Estado |
 | --- | --- |
-| Servidor MCP TypeScript (`src/index.ts`) | **Implementación de referencia** · 76 tools registradas · transporte stdio · 75 tests Vitest |
-| Sidecar Python (`src/retrace_mcp`, `src/python/retrace_analysis`) | Capstone + pyelftools · 40 tests pytest |
+| Servidor MCP TypeScript (`src/index.ts`) | **Implementación de referencia** · 76 tools registradas · transporte stdio · 78 tests Vitest |
+| Python auxiliar (`src/mips/py`) | Bridge Capstone invocado por TypeScript; requiere `RETRACE_PYTHON` con Capstone |
+| Servidor Python alternativo (`src/retrace_mcp`) | Compatibilidad/investigación; no es la instalación MCP principal |
 | Skills de ingeniería (`skills/`) | 23 procedimientos especializados |
 | Diagramas | Fuentes `.drawio` + PNG en [`docs/diagrams`](docs/diagrams) |
 | Decisión de stack | TypeScript es la implementación principal ([ADR-005](docs/coordination/DECISIONS.md)); Python se conserva como sidecar de análisis |
@@ -256,7 +257,15 @@ Para arrancar el servidor:
 node dist/index.js
 ```
 
-### Sidecar Python
+### Python bridge y servidor alternativo
+
+El servidor oficial sigue siendo `node dist/index.js`. Para las tools MIPS,
+TypeScript ejecuta bajo demanda `src/mips/py/mips_disasm.py` con el intérprete
+definido por `RETRACE_PYTHON`; ese bridge requiere `capstone` instalado.
+
+El paquete `src/retrace_mcp` es un servidor MCP Python alternativo, conservado
+para compatibilidad e investigación. No es necesario para arrancar el servidor
+TypeScript ni debe confundirse con la instalación principal.
 
 ```bash
 python -m venv .venv
@@ -271,8 +280,8 @@ pip install -e ".[dev]"
 python -m retrace_mcp --transport stdio
 ```
 
-El sidecar aporta el desensamblador Capstone y el parser ELF con pyelftools. El
-servidor TypeScript lo invoca cuando una tool MIPS o ELF lo necesita.
+`pyelftools` se usa en el servidor Python alternativo y en validaciones auxiliares;
+el parser ELF principal del servidor TypeScript está en `src/parsers/elf.ts`.
 
 ---
 
@@ -420,7 +429,7 @@ npm test
 python -m pytest tests -q
 ```
 
-Estado esperado: **75 tests vitest** y **40 tests pytest** en verde.
+Estado esperado: **78 tests Vitest** y **40 tests pytest** en verde.
 
 Reglas del repositorio:
 

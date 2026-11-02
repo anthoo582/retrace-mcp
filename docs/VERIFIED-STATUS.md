@@ -8,10 +8,11 @@ no. Fue actualizado el **2026-11-02** en el entorno local del repositorio.
 | Comando | Resultado observado |
 | --- | --- |
 | `npm run typecheck` | Correcto |
-| `npm test` | 75 tests Vitest en 21 archivos |
+| `npm test` | 78 tests Vitest en 21 archivos |
 | `python -m pytest tests -q` | 40 tests aprobados |
 | `npm run probe` | 4/33 adaptadores disponibles |
 | Registro MCP TypeScript | 76 tools |
+| `npm run verify:docs` | Catálogo generado coincide con el registro |
 
 Para repetir la comprobación:
 
@@ -36,6 +37,10 @@ binutils GNU, radare2, Ghidra, GDB, PCSX2, toolchain PS2, `splat`, N64Recomp,
 
 La ausencia de una dependencia no se oculta: las tools afectadas devuelven
 `dependency_missing` y no generan resultados falsos.
+
+`project_autopilot` y `project_state` conservan un manifiesto
+`retrace.run-manifest.v1` con hashes SHA-256 de entradas, runtime, versiones de
+adaptadores, configuración, comandos, artefactos, evidencia y limitaciones.
 
 ## Qué no demuestra esta verificación
 
