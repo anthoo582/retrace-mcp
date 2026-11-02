@@ -30,6 +30,7 @@ Owners update this file. One line per tool, only when it is implemented AND test
 | project_intake, rom_validate, toolchain_probe | src/tools/intake.ts, src/adapters/registry.ts | codex | tests/ts/intake.test.ts |
 | analyze_n64_rom, split_rom, ghidra_import, recompile_rom, generate_ps2_project, build_ps2, save_finding | src/tools/automation.ts | codex | tests/ts/automation.test.ts |
 | ghidra_analyze, decompile_function, diff_function, create_ps2_project, run_pcsx2 | src/tools/automation.ts | codex | tests/ts/automation.test.ts |
+| project_autopilot, project_state | src/port/autopilot.ts, src/tools/autopilot.ts | codex | tests/ts/autopilot.test.ts |
 
 ## In progress (claim before starting)
 

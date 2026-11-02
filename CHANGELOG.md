@@ -22,6 +22,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `ghidra_analyze`, `decompile_function`, `diff_function`, `create_ps2_project` y `run_pcsx2`.
 - Diferencias MIPS con estado `unverified` y pseudocódigo m2c marcado como candidato.
 
+## [0.9.0] - 2026-11-02
+
+### Added
+- `project_autopilot` para planificar y registrar el pipeline N64→PS2 según adaptadores disponibles.
+- `project_state` para persistir hashes, capacidades, etapas, bloqueos y gates humanos.
+
 ## [0.5.0] - 2026-11-02
 
 ### Added

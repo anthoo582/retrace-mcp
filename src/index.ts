@@ -17,6 +17,7 @@ import { registerCompareTools } from "./tools/compare.js";
 import { registerPortTools } from "./tools/port.js";
 import { registerIntakeTools } from "./tools/intake.js";
 import { registerAutomationTools } from "./tools/automation.js";
+import { registerAutopilotTools } from "./tools/autopilot.js";
 import { logger } from "./logger.js";
 import { config } from "./config.js";
 import { VERSION } from "./version.js";
@@ -44,6 +45,7 @@ async function main(): Promise<void> {
   registerPortTools(server);
   registerIntakeTools(server);
   registerAutomationTools(server);
+  registerAutopilotTools(server);
 
   const transport = new StdioServerTransport();
 
