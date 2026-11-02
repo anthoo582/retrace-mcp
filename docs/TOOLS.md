@@ -1,6 +1,6 @@
 # Catalogo de tools (TypeScript)
 
-53 tools registradas en `src/index.ts`. Todas devuelven `{ ok, data|error, evidence }`.
+60 tools registradas en `src/index.ts`. Todas devuelven `{ ok, data|error, evidence }`.
 
 ## Sistema (4)
 `retrace_probe`, `retrace_skill_list`, `retrace_skill_read`, `retrace_limits`.
@@ -43,6 +43,11 @@
 ## Intake y toolchains (3)
 `project_intake`, `rom_validate`, `toolchain_probe`.
 
+## Orquestación MVP (7)
+`analyze_n64_rom`, `split_rom`, `ghidra_import`, `recompile_rom`,
+`generate_ps2_project`, `build_ps2`, `save_finding`.
+
 ## Politica de escritura
-Solo `decomp_config_apply_changes`, `build_run` y `audio_decode_file` (con `outPath`)
+Solo `decomp_config_apply_changes`, `build_run`, `split_rom`, `ghidra_import`,
+`recompile_rom`, `generate_ps2_project`, `build_ps2` y `audio_decode_file` (con `outPath`)
 escriben. Todas exigen `RETRACE_ALLOW_WRITE=1` y confirmacion explicita.
