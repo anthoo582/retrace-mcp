@@ -3,11 +3,11 @@
   "mcp": {
     "retrace": {
       "type": "local",
-      "command": ["python", "-m", "retrace_mcp", "--transport", "stdio"],
+      "command": ["node", "C:/ruta/a/retrace-mcp/dist/index.js"],
       "enabled": true,
       "environment": {
-        "RETRACE_TARGET": ".",
-        "RETRACE_LOG_LEVEL": "INFO"
+        "RETRACE_WORKSPACE": "C:/ruta/a/tu/proyecto",
+        "RETRACE_PYTHON": "python"
       }
     }
   }

@@ -2,10 +2,9 @@
 # Los nombres de servidor MCP en Codex son globales al host: usa un nombre único.
 
 [mcp_servers.retrace]
-command = "python"
-args = ["-m", "retrace_mcp", "--transport", "stdio"]
-cwd = "C:\\Users\\Pixel\\Desktop\\mcp-engenier-ps2-ports"
+command = "node"
+args = ["C:/ruta/a/retrace-mcp/dist/index.js"]
 
 [mcp_servers.retrace.env]
-RETRACE_TARGET = "."
-RETRACE_LOG_LEVEL = "INFO"
+RETRACE_WORKSPACE = "C:/ruta/a/tu/proyecto"
+RETRACE_PYTHON = "python"

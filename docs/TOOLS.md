@@ -17,6 +17,9 @@
 ## Comparacion N64/PS2 (4)
 `compare_functions`, `compare_rank`, `equivalence_record`, `equivalence_list`.
 
+## Portabilidad N64/PS2 (3)
+`port_project_plan`, `binary_translate`, `port_validate_translation`.
+
 ## Repositorio (6)
 `repo_inspect`, `repo_get_architecture`, `repo_search_code`, `repo_find_references`,
 `repo_find_dependencies`, `repo_get_file_history`.
