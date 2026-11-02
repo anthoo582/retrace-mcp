@@ -28,7 +28,14 @@ export type AdapterId =
   | "ps2-packer"
   | "mkisofs"
   | "genisoimage"
-  | "pine";
+  | "pine"
+  | "spimdisasm"
+  | "RSPRecomp"
+  | "objdiff"
+  | "decomp-permuter"
+  | "rizin"
+  | "isoinfo"
+  | "7z";
 
 export type AdapterStatus = {
   id: AdapterId;
@@ -63,7 +70,14 @@ const CANDIDATES: Array<{ id: AdapterId; command: string; purpose: string; versi
   { id: "ps2-packer", command: "ps2-packer", purpose: "Optional PS2 ELF packaging", versionArgs: ["--help"] },
   { id: "mkisofs", command: "mkisofs", purpose: "Build a PS2 ISO filesystem from an authorized project tree", versionArgs: ["--version"] },
   { id: "genisoimage", command: "genisoimage", purpose: "Build a PS2 ISO filesystem from an authorized project tree", versionArgs: ["--version"] },
-  { id: "pine", command: "pine", purpose: "PCSX2 IPC validation client", versionArgs: ["--help"] }
+  { id: "pine", command: "pine", purpose: "PCSX2 IPC validation client", versionArgs: ["--help"] },
+  { id: "spimdisasm", command: "spimdisasm", purpose: "N64 MIPS disassembly and symbol metadata", versionArgs: ["--version"] },
+  { id: "RSPRecomp", command: "RSPRecomp", purpose: "RSP microcode recompilation", versionArgs: ["--help"] },
+  { id: "objdiff", command: "objdiff", purpose: "Object-level matching and regression diff", versionArgs: ["--version"] },
+  { id: "decomp-permuter", command: "decomp-permuter", purpose: "Bounded source permutation search for matching", versionArgs: ["--help"] },
+  { id: "rizin", command: "rz-bin", purpose: "Optional binary analysis and cross-reference inspection", versionArgs: ["-v"] },
+  { id: "isoinfo", command: "isoinfo", purpose: "Read-only ISO filesystem verification", versionArgs: ["-version"] },
+  { id: "7z", command: "7z", purpose: "Read-only ISO archive listing fallback", versionArgs: ["-h"] }
 ];
 
 let cache: AdapterStatus[] | null = null;

@@ -25,6 +25,11 @@ async function listSourceFiles(root: string): Promise<string[]> {
   return result.sort();
 }
 
+export function isoListingHasBootFiles(listing: string): boolean {
+  const normalized = listing.toUpperCase();
+  return normalized.includes("SYSTEM.CNF") && normalized.includes("BOOT.ELF");
+}
+
 export function registerPipelineTools(server: McpServer): void {
   registerTool(server, "port_start", "Create a resumable, evidence-driven N64-to-PS2 port job. It preserves the ROM and never claims a port before validation.", {
     romPath: z.string(),
@@ -88,5 +93,22 @@ export function registerPipelineTools(server: McpServer): void {
       await persistPortJob(job, true);
     }
     return ok({ status: "created", iso, bytes: bytes.length, sha256: await hashArtifact(iso), adapter: adapter.id, command: result.command, args: result.args, sourcePreserved: true, validation: "not_claimed_until_pcsx2_boot_and_input_replay" });
+  });
+
+  registerTool(server, "iso_verify", "Verify a PS2 ISO with an installed ISO reader and confirm that SYSTEM.CNF and BOOT.ELF are present. This is a filesystem gate, not a gameplay claim.", {
+    isoPath: z.string(),
+    expectedSha256: z.string().length(64).optional()
+  }, async ({ isoPath, expectedSha256 }) => {
+    const iso = resolveInWorkspace(isoPath);
+    const adapters = await detectAdapters(true);
+    const reader = findAdapter(adapters, ["isoinfo", "7z"]);
+    if (!reader) throw new Error("No ISO reader is installed. Install isoinfo or 7z; ISO contents were not simulated.");
+    const args = reader.id === "isoinfo" ? ["-i", iso, "-f"] : ["l", iso];
+    const result = await execFile(reader.command, args, { timeoutMs: 120000, maxBytes: 16 * 1024 * 1024 });
+    if (result.code !== 0) throw new Error(`${reader.id} failed with exit ${result.code}: ${result.stderr.trim() || result.stdout.trim()}`);
+    const sha256 = await hashArtifact(iso);
+    const bootFiles = isoListingHasBootFiles(result.stdout);
+    const hashMatches = expectedSha256 === undefined || expectedSha256.toLowerCase() === sha256;
+    return ok({ iso, sha256, hashMatches, bootFiles, reader: reader.id, status: bootFiles && hashMatches ? "filesystem_verified" : "verification_failed", gameplay: "not_claimed" });
   });
 }

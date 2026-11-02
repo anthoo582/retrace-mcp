@@ -1,6 +1,6 @@
 # Catalogo de tools (TypeScript)
 
-76 tools registradas en `src/index.ts`. Todas devuelven `{ ok, data|error, evidence }`.
+77 tools registradas en `src/index.ts`. Todas devuelven `{ ok, data|error, evidence }`.
 
 ## Sistema (4)
 `retrace_probe`, `retrace_skill_list`, `retrace_skill_read`, `retrace_limits`.
@@ -57,8 +57,8 @@
 ## Variables y ABI (4)
 `infer_variables`, `infer_structs`, `suggest_variable_names`, `validate_variable_map`.
 
-## Pipeline autónomo (4)
-`port_start`, `port_status`, `port_source_manifest`, `package_ps2_iso`.
+## Pipeline autónomo (5)
+`port_start`, `port_status`, `port_source_manifest`, `package_ps2_iso`, `iso_verify`.
 
 ## Politica de escritura
 Solo las tools con `apply=true`, `confirm=true` o una ruta de salida explícita escriben.

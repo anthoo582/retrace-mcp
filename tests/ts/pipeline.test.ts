@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { findAdapter, jobPath } from "../../src/port/pipeline.js";
+import { isoListingHasBootFiles } from "../../src/tools/pipeline.js";
 
 describe("autonomous port pipeline", () => {
   it("selects only an available ISO builder", () => {
@@ -12,5 +13,10 @@ describe("autonomous port pipeline", () => {
 
   it("stores resumable jobs under the project control directory", () => {
     expect(jobPath("C:\\ports\\mario")).toBe("C:\\ports\\mario\\.retrace\\port-job.json");
+  });
+
+  it("does not treat an ISO as valid without both boot files", () => {
+    expect(isoListingHasBootFiles("/SYSTEM.CNF;1\n/BOOT.ELF;1\n")).toBe(true);
+    expect(isoListingHasBootFiles("/SYSTEM.CNF;1\n/README.TXT;1\n")).toBe(false);
   });
 });

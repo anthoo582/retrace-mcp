@@ -10,7 +10,7 @@
 [![MCP](https://img.shields.io/badge/protocol-MCP%20stdio-59f2b0?style=flat-square)](https://modelcontextprotocol.io)
 [![Node](https://img.shields.io/badge/Node.js-%E2%89%A520-59f2b0?style=flat-square)](package.json)
 [![Python](https://img.shields.io/badge/Python-%E2%89%A53.10-59f2b0?style=flat-square)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-74%20TS%20%2B%2040%20Python-ff9a3d?style=flat-square)](tests)
+[![Tests](https://img.shields.io/badge/tests-75%20TS%20%2B%2040%20Python-ff9a3d?style=flat-square)](tests)
 [![License](https://img.shields.io/badge/license-MIT-9fb0d0?style=flat-square)](LICENSE)
 
 </div>
@@ -353,7 +353,7 @@ versión, roots, política de escritura y adaptadores disponibles.
 
 ```text
 src/
-  index.ts              # arranque MCP y registro de las 76 tools
+  index.ts              # arranque MCP y registro de las 77 tools
   tools/                # validación y superficie MCP por subsistema
   parsers/              # N64 ROM, ELF, símbolos
   mips/                 # desensamblado, análisis y reconstrucción
@@ -386,7 +386,7 @@ scripts/                # probe y generador de diagramas
 | Documento | Contenido |
 | --- | --- |
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Capas, flujo de una tool y modelo de certeza |
-| [`docs/TOOLS.md`](docs/TOOLS.md) | Catálogo de las 76 tools y política de escritura |
+| [`docs/TOOLS.md`](docs/TOOLS.md) | Catálogo de las 77 tools y política de escritura |
 | [`docs/SKILLS.md`](docs/SKILLS.md) | Las 23 skills y su procedencia |
 | [`docs/COMPARISON_ENGINE.md`](docs/COMPARISON_ENGINE.md) | Normalización, métricas y niveles de equivalencia |
 | [`docs/KNOWLEDGE_GRAPH.md`](docs/KNOWLEDGE_GRAPH.md) | Nodos, aristas e ingestión |
@@ -419,7 +419,7 @@ npm test
 python -m pytest tests -q
 ```
 
-Estado esperado: **74 tests vitest** y **40 tests pytest** en verde.
+Estado esperado: **75 tests vitest** y **40 tests pytest** en verde.
 
 Reglas del repositorio:
 
