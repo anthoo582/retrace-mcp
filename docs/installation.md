@@ -29,8 +29,15 @@ npm run build
 npm run probe
 ```
 
+También puedes instalar el CLI publicado:
+
+```bash
+npm install -g @anthoo582/retrace-mcp
+retrace-mcp
+```
+
 `npm run probe` muestra Node, workspace, límites, política de escritura y
-adaptadores disponibles. Para arrancar el servidor:
+adaptadores disponibles. Para arrancar el servidor desde el checkout:
 
 ```bash
 node dist/index.js
@@ -161,4 +168,4 @@ npm test
 python -m pytest tests -q
 ```
 
-Resultado esperado: 66 tests vitest y 40 tests pytest en verde.
+Resultado esperado: 72 tests vitest y 40 tests pytest en verde.

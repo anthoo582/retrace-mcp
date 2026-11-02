@@ -6,5 +6,5 @@ server translates MCP tool calls into these methods.
 
 from __future__ import annotations
 
-VERSION = "0.1.0"
+VERSION = "1.0.0"
 PROTOCOL = 1

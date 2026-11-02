@@ -33,7 +33,7 @@ export function registerGraphTools(server: McpServer): void {
         "note"
       ]).describe("Node type"),
       label: z.string().describe("Human readable label"),
-      props: z.record(z.any()).optional().describe("Key-value properties")
+      props: z.record(z.string(), z.any()).optional().describe("Key-value properties")
     },
     async ({ id, type, label, props }) => {
       const graph = getGraph();
@@ -52,7 +52,7 @@ export function registerGraphTools(server: McpServer): void {
       from: z.string().describe("Source node ID"),
       to: z.string().describe("Target node ID"),
       relationship: z.string().describe("Relationship name, e.g. 'renders', 'calls', 'allocates', 'crashed_at'"),
-      props: z.record(z.any()).optional().describe("Edge metadata")
+      props: z.record(z.string(), z.any()).optional().describe("Edge metadata")
     },
     async ({ from, to, relationship, props }) => {
       const graph = getGraph();

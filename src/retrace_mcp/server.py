@@ -37,7 +37,7 @@ def main(argv: list[str] | None = None) -> int:
 
     transport = args.transport or settings.transport
     log = get_logger("server")
-    log.info("starting", extra={"data": {"transport": transport, "version": "0.1.0"}})
+    log.info("starting", extra={"data": {"transport": transport, "version": "1.0.0"}})
 
     # MCP v2 usa run() con opciones específicas
     if transport in ("streamable-http", "sse"):

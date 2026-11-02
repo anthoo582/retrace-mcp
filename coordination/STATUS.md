@@ -37,7 +37,7 @@ Owners update this file. One line per tool, only when it is implemented AND test
 
 | Tool | Module | Owner | Started |
 | --- | --- | --- | --- |
-| (none currently claimed) | | | |
+| release-hardening, path-security | package.json, pyproject.toml, src/security/paths.ts | codex | P0 release verification |
 
 ## Conventions
 

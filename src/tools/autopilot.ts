@@ -51,7 +51,7 @@ export function registerAutopilotTools(server: McpServer): void {
   registerTool(server, "project_state", "Read or persist the reproducible project manifest used by the N64-to-PS2 autopilot.", {
     action: z.enum(["read", "write"]),
     projectRoot: z.string(),
-    state: z.record(z.any()).optional(),
+    state: z.record(z.string(), z.any()).optional(),
     confirm: z.boolean().optional()
   }, async ({ action, projectRoot, state, confirm }) => {
     const root = resolveInWorkspace(projectRoot, false);

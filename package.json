@@ -1,13 +1,41 @@
 {
-  "name": "retrace-mcp",
+  "name": "@anthoo582/retrace-mcp",
   "version": "1.0.0",
   "description": "Reverse engineering MCP for Nintendo 64 and PlayStation 2 binaries, memory dumps, graphics, audio and decompilation projects.",
   "license": "MIT",
+  "author": "anthoo582",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anthoo582/retrace-mcp.git"
+  },
+  "homepage": "https://github.com/anthoo582/retrace-mcp#readme",
+  "bugs": {
+    "url": "https://github.com/anthoo582/retrace-mcp/issues"
+  },
+  "keywords": [
+    "mcp",
+    "reverse-engineering",
+    "nintendo-64",
+    "playstation-2",
+    "mips",
+    "decompilation",
+    "porting"
+  ],
   "type": "module",
   "bin": {
     "retrace-mcp": "dist/index.js"
   },
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "dist",
     "src/mips/py",
@@ -21,7 +49,10 @@
     "probe": "node scripts/probe.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "verify:release": "npm run typecheck && npm test && npm run build && npm pack --dry-run",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run verify:release"
   },
   "engines": {
     "node": ">=20"
@@ -29,12 +60,12 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.32.2",
     "yaml": "^2.8.1",
-    "zod": "^3.25.76"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
-    "vitest": "^3.2.4"
+    "vitest": "^5.1.0"
   }
 }

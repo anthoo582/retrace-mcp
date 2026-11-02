@@ -1,5 +1,5 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import type { ZodRawShape } from "zod";
+import type { ZodRawShape, infer as ZodInfer } from "zod";
 import { AdapterUnavailableError } from "../adapters/registry.js";
 import { PathSecurityError } from "../security/paths.js";
 import { fail, ok, ToolPayload } from "../core/evidence.js";
@@ -22,7 +22,7 @@ export function registerTool<Shape extends ZodRawShape>(
   name: string,
   description: string,
   inputSchema: Shape,
-  handler: (args: { [K in keyof Shape]: Shape[K]["_output"] }) => Promise<ToolResult> | ToolResult
+  handler: (args: { [K in keyof Shape]: ZodInfer<Shape[K]> }) => Promise<ToolResult> | ToolResult
 ): void {
   (server as any).registerTool(
     name,

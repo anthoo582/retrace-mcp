@@ -1,4 +1,5 @@
 import fs from "node:fs/promises";
+import fsSync from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 import { config } from "../config.js";
@@ -17,15 +18,34 @@ export function isInside(root: string, candidate: string): boolean {
 
 export function resolveInWorkspace(input: string, mustExist = true): string {
   const candidate = path.resolve(input);
-  if (!config.workspaceRoots.some((root) => isInside(root, candidate))) {
+  const canonicalCandidate = canonicalize(candidate, mustExist);
+  const allowed = config.workspaceRoots.some((root) => isInside(canonicalize(path.resolve(root), false), canonicalCandidate));
+  if (!allowed) {
     throw new PathSecurityError(
-      `Path outside configured workspace roots: ${candidate}. Roots: ${config.workspaceRoots.join(", ")}`
+      `Path outside configured workspace roots: ${candidate}. Canonical path: ${canonicalCandidate}. Roots: ${config.workspaceRoots.join(", ")}`
     );
   }
-  if (mustExist) {
+  return canonicalCandidate;
+}
+
+function canonicalize(candidate: string, mustExist: boolean): string {
+  try {
+    return fsSync.realpathSync.native(candidate);
+  } catch (error) {
+    if (mustExist && error instanceof Error && "code" in error && (error as { code?: string }).code !== "ENOENT") throw error;
+    let parent = path.dirname(candidate);
+    const tail: string[] = [path.basename(candidate)];
+    while (parent !== path.dirname(parent)) {
+      try {
+        const realParent = fsSync.realpathSync.native(parent);
+        return path.join(realParent, ...tail.reverse());
+      } catch {
+        tail.push(path.basename(parent));
+        parent = path.dirname(parent);
+      }
+    }
     return candidate;
   }
-  return candidate;
 }
 
 export async function statSafe(target: string): Promise<{ size: number; isFile: boolean; isDirectory: boolean }> {

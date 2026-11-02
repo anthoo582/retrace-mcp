@@ -5,4 +5,4 @@ videojuegos clásicos: análisis de ROMs de Nintendo 64, ejecutables ELF de
 PlayStation 2, ensamblador MIPS (R4300i y R5900), memoria, gráficos y audio.
 """
 
-__version__ = "0.1.0"
+__version__ = "1.0.0"

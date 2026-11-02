@@ -10,7 +10,7 @@
 [![MCP](https://img.shields.io/badge/protocol-MCP%20stdio-59f2b0?style=flat-square)](https://modelcontextprotocol.io)
 [![Node](https://img.shields.io/badge/Node.js-%E2%89%A520-59f2b0?style=flat-square)](package.json)
 [![Python](https://img.shields.io/badge/Python-%E2%89%A53.10-59f2b0?style=flat-square)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-66%20TS%20%2B%2040%20Python-ff9a3d?style=flat-square)](tests)
+[![Tests](https://img.shields.io/badge/tests-72%20TS%20%2B%2040%20Python-ff9a3d?style=flat-square)](tests)
 [![License](https://img.shields.io/badge/license-MIT-9fb0d0?style=flat-square)](LICENSE)
 
 </div>
@@ -168,7 +168,7 @@ o, en caso de error:
 ```
 
 El catálogo detallado, parámetros y política de escritura viven en
-[`docs/TOOLS.md`](docs/TOOLS.md). Los 21 procedimientos de ingeniería están en
+[`docs/TOOLS.md`](docs/TOOLS.md). Los 22 procedimientos de ingeniería están en
 [`docs/SKILLS.md`](docs/SKILLS.md) y se leen con `retrace_skill_list` /
 `retrace_skill_read`.
 
@@ -240,6 +240,13 @@ cd retrace-mcp
 npm ci
 npm run build
 npm run probe
+```
+
+Para instalar el paquete publicado sin clonar el repositorio:
+
+```bash
+npm install -g @anthoo582/retrace-mcp
+retrace-mcp
 ```
 
 `npm run probe` comprueba Node, workspace, límites y adaptadores externos.
@@ -346,7 +353,7 @@ versión, roots, política de escritura y adaptadores disponibles.
 
 ```text
 src/
-  index.ts              # arranque MCP y registro de las 60 tools
+  index.ts              # arranque MCP y registro de las 72 tools
   tools/                # validación y superficie MCP por subsistema
   parsers/              # N64 ROM, ELF, símbolos
   mips/                 # desensamblado, análisis y reconstrucción
@@ -363,7 +370,7 @@ src/
   security/             # resolución segura de rutas
   retrace_mcp/          # sidecar Python (servidor alternativo)
   python/retrace_analysis/  # motores Python: capstone, pyelftools
-skills/                 # 21 skills de ingeniería
+skills/                 # 22 skills de ingeniería
 tests/                  # vitest (TypeScript) y pytest (Python)
 docs/
   diagrams/             # fuentes .drawio + PNG generados
@@ -379,8 +386,8 @@ scripts/                # probe y generador de diagramas
 | Documento | Contenido |
 | --- | --- |
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Capas, flujo de una tool y modelo de certeza |
-| [`docs/TOOLS.md`](docs/TOOLS.md) | Catálogo de las 60 tools y política de escritura |
-| [`docs/SKILLS.md`](docs/SKILLS.md) | Las 21 skills y su procedencia |
+| [`docs/TOOLS.md`](docs/TOOLS.md) | Catálogo de las 72 tools y política de escritura |
+| [`docs/SKILLS.md`](docs/SKILLS.md) | Las 22 skills y su procedencia |
 | [`docs/COMPARISON_ENGINE.md`](docs/COMPARISON_ENGINE.md) | Normalización, métricas y niveles de equivalencia |
 | [`docs/KNOWLEDGE_GRAPH.md`](docs/KNOWLEDGE_GRAPH.md) | Nodos, aristas e ingestión |
 | [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md) | Herramientas externas y licencias |
@@ -412,7 +419,7 @@ npm test
 python -m pytest tests -q
 ```
 
-Estado esperado: **66 tests vitest** y **40 tests pytest** en verde.
+Estado esperado: **72 tests vitest** y **40 tests pytest** en verde.
 
 Reglas del repositorio:
 
