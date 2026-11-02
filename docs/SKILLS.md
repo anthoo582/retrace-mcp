@@ -17,6 +17,9 @@
 | `build-validation` | Detectar y ejecutar builds de forma segura |
 | `n64-to-ps2-porting` | Flujo completo de portabilidad, traducción binaria segura y validación |
 
+El flujo recomendado y sus fuentes primarias están documentados en
+[`reports/Portabilidad N64 a PS2.md`](../reports/Portabilidad%20N64%20a%20PS2.md).
+
 ## Procedencia
 - Escritas para Retrace: `ps2-elf-forensics`, `cross-platform-porting`,
   `audio-format-analysis`, `memory-dump-forensics`, `decomp-workflow`, `build-validation`.

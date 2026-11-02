@@ -19,7 +19,13 @@ export type AdapterId =
   | "git"
   | "make"
   | "cmake"
-  | "ninja";
+  | "ninja"
+  | "splat"
+  | "n64recomp"
+  | "m2c"
+  | "asm-differ"
+  | "ps2client"
+  | "ps2-packer";
 
 export type AdapterStatus = {
   id: AdapterId;
@@ -45,7 +51,13 @@ const CANDIDATES: Array<{ id: AdapterId; command: string; purpose: string; versi
   { id: "git", command: "git", purpose: "Repository history and diffs", versionArgs: ["--version"] },
   { id: "make", command: "make", purpose: "Project build driver", versionArgs: ["--version"] },
   { id: "cmake", command: "cmake", purpose: "Project build driver", versionArgs: ["--version"] },
-  { id: "ninja", command: "ninja", purpose: "Project build driver", versionArgs: ["--version"] }
+  { id: "ninja", command: "ninja", purpose: "Project build driver", versionArgs: ["--version"] },
+  { id: "splat", command: "splat", purpose: "N64 ROM/ELF segmentation and asset metadata", versionArgs: ["--version"] },
+  { id: "n64recomp", command: "N64Recomp", purpose: "N64 static recompilation to C/C++", versionArgs: ["--help"] },
+  { id: "m2c", command: "m2c", purpose: "MIPS assembly to C reconstruction aid", versionArgs: ["--help"] },
+  { id: "asm-differ", command: "asm-differ", purpose: "Function assembly matching and regression diffs", versionArgs: ["--help"] },
+  { id: "ps2client", command: "ps2client", purpose: "PS2 development network client", versionArgs: ["--help"] },
+  { id: "ps2-packer", command: "ps2-packer", purpose: "Optional PS2 ELF packaging", versionArgs: ["--help"] }
 ];
 
 let cache: AdapterStatus[] | null = null;

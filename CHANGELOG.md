@@ -5,6 +5,13 @@ All notable changes to retrace-mcp will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2026-11-02
+
+### Added
+- `project_intake`, `rom_validate` y `toolchain_probe` para intake reproducible, validación read-only y gates de capacidades.
+- Detección opcional de `splat`, `N64Recomp`, `m2c`, `asm-differ`, `ps2client` y `ps2-packer`.
+- Informe de investigación web con fuentes primarias y roadmap de automatización N64→PS2.
+
 ## [0.4.0] - 2026-11-02
 
 ### Added

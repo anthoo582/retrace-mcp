@@ -19,3 +19,4 @@ Cada agente agrega y actualiza **solo sus propias filas**.
 | F6-graph | Grafo de conocimiento y correlación | core | master | done | `src/knowledge/graph.ts` + `src/tools/graph.ts` |
 | F7-clients | Instaladores OpenCode / Claude Code / Codex | core | master | done | `configs/` y documentación multicliente |
 | F8-validate | Suite completa, seguridad, documentación | ambos | master | done | 20 tests TS (vitest) + 40 tests Python (pytest) |
+| R1-research | Investigación de reversing y validación N64/PS2 | codex | work/research | done | Informe en reports/Portabilidad N64 a PS2.md |

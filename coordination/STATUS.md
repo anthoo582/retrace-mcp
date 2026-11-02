@@ -27,6 +27,7 @@ Owners update this file. One line per tool, only when it is implemented AND test
 | graph_ingest | src/knowledge/ingest.ts, src/tools/graph.ts | ts-core | tests/ts/ingest.test.ts |
 | build_run | src/build/run.ts, src/tools/build.ts | ts-core | tests/ts/build.test.ts |
 | binary_translate, port_project_plan, port_validate_translation | src/port/porting.ts, src/tools/port.ts | codex | tests/ts/port.test.ts |
+| project_intake, rom_validate, toolchain_probe | src/tools/intake.ts, src/adapters/registry.ts | codex | tests/ts/intake.test.ts |
 
 ## In progress (claim before starting)
 

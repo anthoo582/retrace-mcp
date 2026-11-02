@@ -7,7 +7,7 @@ audio. Permite que un agente de IA investigue un binario, entienda su
 arquitectura, identifique funciones y reconstruya estructuras con evidencia
 verificable.
 
-> **Estado:** v0.4.0.
+> **Estado:** v0.5.0.
 > - Servidor TypeScript (`src/index.ts`): **47 herramientas** registradas, Stdio transport, **59 tests vitest** pasando.
 > - Sidecar Python (`src/retrace_mcp`): 24 herramientas, 40 tests pytest pasando.
 > - Diagnóstico: `npm run probe` (`scripts/probe.mjs`).
@@ -27,6 +27,7 @@ verificable.
 | MIPS | `mips_disassemble`, `mips_analyze_function`, `mips_reconstruct_function` | ✅ |
 | Comparación N64/PS2 | `compare_functions`, `compare_rank`, `equivalence_record`, `equivalence_list` | ✅ |
 | Portabilidad N64/PS2 | `port_project_plan`, `binary_translate`, `port_validate_translation` | ✅ |
+| Intake y toolchains | `project_intake`, `rom_validate`, `toolchain_probe` | ✅ |
 | Memoria / crashes | `memory_inspect_region`, `memory_check_alignment`, `memory_analyze_overlap`, `crash_analyze` | ✅ |
 | Gráficos | `texture_inspect`, `texture_analyze_palette`, `texture_decode_n64`, `texture_decode_ps2` | ✅ |
 | Audio | `audio_inspect`, `audio_decode_vag_block`, `audio_decode_file` | ✅ |
@@ -34,12 +35,14 @@ verificable.
 | Knowledge graph | `graph_node_upsert`, `graph_edge_upsert`, `graph_query_neighbors`, `graph_ingest` | ✅ |
 | Reportes / build | `generate_forensic_report`, `build_analyze`, `build_run` | ✅ |
 
-**Total:** 50 herramientas TypeScript implementadas y testeadas.
+**Total:** 53 herramientas TypeScript implementadas y testeadas.
 
 Documentación: [arquitectura](docs/ARCHITECTURE.md), [tools](docs/TOOLS.md),
 [skills](docs/SKILLS.md), [comparador](docs/COMPARISON_ENGINE.md),
 [grafo](docs/KNOWLEDGE_GRAPH.md), [integraciones](docs/INTEGRATIONS.md),
 [auditoría](docs/AUDIT.md) y [roadmap](docs/ROADMAP.md).
+
+Investigación web y hoja de ruta: [Portabilidad N64 a PS2](reports/Portabilidad%20N64%20a%20PS2.md).
 
 Cada herramienta devuelve un JSON estructurado `{ "ok": true, "data": ... }` o
 `{ "ok": false, "error": { "code", "message" } }`.
@@ -106,6 +109,7 @@ Con el servidor conectado, el agente dispone de las herramientas como
 - *"Desensambla la función en 0x80000400 como R4300i."* → `mips_disassemble`.
 - *"Busca referencias a `main_func` en el código."* → `repo_find_references`.
 - *"Prepara un port de N64 a PS2 y traduce estas palabras MIPS."* → `port_project_plan` + `binary_translate` + `port_validate_translation`.
+- *"¿Qué tengo instalado y puedo empezar?"* → `project_intake` + `rom_validate` + `toolchain_probe`.
 
 ---
 
