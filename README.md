@@ -28,6 +28,7 @@ verificable.
 | Comparación N64/PS2 | `compare_functions`, `compare_rank`, `equivalence_record`, `equivalence_list` | ✅ |
 | Portabilidad N64/PS2 | `port_project_plan`, `binary_translate`, `port_validate_translation` | ✅ |
 | Intake y toolchains | `project_intake`, `rom_validate`, `toolchain_probe` | ✅ |
+| Skills de portabilidad | 21 skills especializadas para ISA, RSP/RDP, GS/VU, assets, audio, DMA, Ghidra, recompilación y validación | ✅ |
 | Orquestación MVP | `analyze_n64_rom`, `split_rom`, `ghidra_import`, `recompile_rom`, `generate_ps2_project`, `build_ps2`, `save_finding` | ✅ |
 | Memoria / crashes | `memory_inspect_region`, `memory_check_alignment`, `memory_analyze_overlap`, `crash_analyze` | ✅ |
 | Gráficos | `texture_inspect`, `texture_analyze_palette`, `texture_decode_n64`, `texture_decode_ps2` | ✅ |

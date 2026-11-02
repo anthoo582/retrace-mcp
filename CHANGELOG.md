@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - MVP de orquestación: análisis ROM, wrappers seguros para splat/Ghidra/N64Recomp, scaffold PS2, build allowlisted y findings persistentes.
 - Todas las operaciones externas conservan stdout/stderr y devuelven error explícito si falta el adaptador.
 
+## [0.7.0] - 2026-11-02
+
+### Added
+- 9 skills especializadas para RSP/RDP, GS/VU, assets, audio, DMA/timing, Ghidra Headless, recompilación, validación y procedencia/licencias.
+
 ## [0.5.0] - 2026-11-02
 
 ### Added

@@ -1,6 +1,6 @@
 # Skills incluidas
 
-12 skills en `skills/`, leibles con `retrace_skill_list` y `retrace_skill_read`.
+21 skills en `skills/`, leibles con `retrace_skill_list` y `retrace_skill_read`.
 
 | Skill | Uso |
 | --- | --- |
@@ -16,6 +16,15 @@
 | `decomp-workflow` | Desensamblado vs reconstruccion vs decomp verificable |
 | `build-validation` | Detectar y ejecutar builds de forma segura |
 | `n64-to-ps2-porting` | Flujo completo de portabilidad, traducción binaria segura y validación |
+| `rsp-rdp-microcode-analysis` | Microcódigo RSP/RDP, display lists, DMEM/IMEM y TMEM |
+| `ps2-gs-vu-backend` | Diseño y validación de backend GS/GIF/VIF/VU1 |
+| `n64-asset-pipeline` | Inventario y conversión verificable de assets N64 |
+| `ps2-audio-runtime` | Port de bancos, VADPCM, mixer y runtime SPU2/IOP |
+| `ps2-dma-timing` | DMA, buffers, sincronización, stalls y timing |
+| `ghidra-headless-analysis` | Análisis reproducible de ROM/ELF con Ghidra Headless |
+| `n64-recompilation` | Orquestación de splat, N64Recomp, m2c y asm-differ |
+| `emulator-hardware-validation` | Validación PCSX2, goldens, traces y hardware autorizado |
+| `license-provenance` | Licencias, SBOM, procedencia y límites de distribución |
 
 El flujo recomendado y sus fuentes primarias están documentados en
 [`reports/Portabilidad N64 a PS2.md`](../reports/Portabilidad%20N64%20a%20PS2.md).
