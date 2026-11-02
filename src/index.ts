@@ -19,6 +19,7 @@ import { registerIntakeTools } from "./tools/intake.js";
 import { registerAutomationTools } from "./tools/automation.js";
 import { registerAutopilotTools } from "./tools/autopilot.js";
 import { registerVariableTools } from "./tools/variables.js";
+import { registerPipelineTools } from "./tools/pipeline.js";
 import { logger } from "./logger.js";
 import { config } from "./config.js";
 import { VERSION } from "./version.js";
@@ -48,6 +49,7 @@ async function main(): Promise<void> {
   registerAutomationTools(server);
   registerAutopilotTools(server);
   registerVariableTools(server);
+  registerPipelineTools(server);
 
   const transport = new StdioServerTransport();
 

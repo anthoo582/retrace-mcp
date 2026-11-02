@@ -25,7 +25,10 @@ export type AdapterId =
   | "m2c"
   | "asm-differ"
   | "ps2client"
-  | "ps2-packer";
+  | "ps2-packer"
+  | "mkisofs"
+  | "genisoimage"
+  | "pine";
 
 export type AdapterStatus = {
   id: AdapterId;
@@ -57,7 +60,10 @@ const CANDIDATES: Array<{ id: AdapterId; command: string; purpose: string; versi
   { id: "m2c", command: "m2c", purpose: "MIPS assembly to C reconstruction aid", versionArgs: ["--help"] },
   { id: "asm-differ", command: "asm-differ", purpose: "Function assembly matching and regression diffs", versionArgs: ["--help"] },
   { id: "ps2client", command: "ps2client", purpose: "PS2 development network client", versionArgs: ["--help"] },
-  { id: "ps2-packer", command: "ps2-packer", purpose: "Optional PS2 ELF packaging", versionArgs: ["--help"] }
+  { id: "ps2-packer", command: "ps2-packer", purpose: "Optional PS2 ELF packaging", versionArgs: ["--help"] },
+  { id: "mkisofs", command: "mkisofs", purpose: "Build a PS2 ISO filesystem from an authorized project tree", versionArgs: ["--version"] },
+  { id: "genisoimage", command: "genisoimage", purpose: "Build a PS2 ISO filesystem from an authorized project tree", versionArgs: ["--version"] },
+  { id: "pine", command: "pine", purpose: "PCSX2 IPC validation client", versionArgs: ["--help"] }
 ];
 
 let cache: AdapterStatus[] | null = null;

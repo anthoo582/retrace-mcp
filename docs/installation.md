@@ -168,4 +168,4 @@ npm test
 python -m pytest tests -q
 ```
 
-Resultado esperado: 72 tests vitest y 40 tests pytest en verde.
+Resultado esperado: 74 tests vitest y 40 tests pytest en verde.

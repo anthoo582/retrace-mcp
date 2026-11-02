@@ -10,7 +10,7 @@
 [![MCP](https://img.shields.io/badge/protocol-MCP%20stdio-59f2b0?style=flat-square)](https://modelcontextprotocol.io)
 [![Node](https://img.shields.io/badge/Node.js-%E2%89%A520-59f2b0?style=flat-square)](package.json)
 [![Python](https://img.shields.io/badge/Python-%E2%89%A53.10-59f2b0?style=flat-square)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-72%20TS%20%2B%2040%20Python-ff9a3d?style=flat-square)](tests)
+[![Tests](https://img.shields.io/badge/tests-74%20TS%20%2B%2040%20Python-ff9a3d?style=flat-square)](tests)
 [![License](https://img.shields.io/badge/license-MIT-9fb0d0?style=flat-square)](LICENSE)
 
 </div>
@@ -55,7 +55,7 @@ probar.
 | --- | --- |
 | Servidor MCP TypeScript (`src/index.ts`) | **Implementación de referencia** · 71 tools · transporte stdio · 71 tests vitest |
 | Sidecar Python (`src/retrace_mcp`, `src/python/retrace_analysis`) | Capstone + pyelftools · 40 tests pytest |
-| Skills de ingeniería (`skills/`) | 22 procedimientos especializados |
+| Skills de ingeniería (`skills/`) | 23 procedimientos especializados |
 | Diagramas | Fuentes `.drawio` + PNG en [`docs/diagrams`](docs/diagrams) |
 | Decisión de stack | TypeScript es la implementación principal ([ADR-005](docs/coordination/DECISIONS.md)); Python se conserva como sidecar de análisis |
 | Diagnóstico | `npm run probe` y la tool `retrace_probe` |
@@ -168,7 +168,7 @@ o, en caso de error:
 ```
 
 El catálogo detallado, parámetros y política de escritura viven en
-[`docs/TOOLS.md`](docs/TOOLS.md). Los 22 procedimientos de ingeniería están en
+[`docs/TOOLS.md`](docs/TOOLS.md). Los 23 procedimientos de ingeniería están en
 [`docs/SKILLS.md`](docs/SKILLS.md) y se leen con `retrace_skill_list` /
 `retrace_skill_read`.
 
@@ -353,7 +353,7 @@ versión, roots, política de escritura y adaptadores disponibles.
 
 ```text
 src/
-  index.ts              # arranque MCP y registro de las 72 tools
+  index.ts              # arranque MCP y registro de las 76 tools
   tools/                # validación y superficie MCP por subsistema
   parsers/              # N64 ROM, ELF, símbolos
   mips/                 # desensamblado, análisis y reconstrucción
@@ -370,7 +370,7 @@ src/
   security/             # resolución segura de rutas
   retrace_mcp/          # sidecar Python (servidor alternativo)
   python/retrace_analysis/  # motores Python: capstone, pyelftools
-skills/                 # 22 skills de ingeniería
+skills/                 # 23 skills de ingeniería
 tests/                  # vitest (TypeScript) y pytest (Python)
 docs/
   diagrams/             # fuentes .drawio + PNG generados
@@ -386,8 +386,8 @@ scripts/                # probe y generador de diagramas
 | Documento | Contenido |
 | --- | --- |
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Capas, flujo de una tool y modelo de certeza |
-| [`docs/TOOLS.md`](docs/TOOLS.md) | Catálogo de las 72 tools y política de escritura |
-| [`docs/SKILLS.md`](docs/SKILLS.md) | Las 22 skills y su procedencia |
+| [`docs/TOOLS.md`](docs/TOOLS.md) | Catálogo de las 76 tools y política de escritura |
+| [`docs/SKILLS.md`](docs/SKILLS.md) | Las 23 skills y su procedencia |
 | [`docs/COMPARISON_ENGINE.md`](docs/COMPARISON_ENGINE.md) | Normalización, métricas y niveles de equivalencia |
 | [`docs/KNOWLEDGE_GRAPH.md`](docs/KNOWLEDGE_GRAPH.md) | Nodos, aristas e ingestión |
 | [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md) | Herramientas externas y licencias |
@@ -419,7 +419,7 @@ npm test
 python -m pytest tests -q
 ```
 
-Estado esperado: **72 tests vitest** y **40 tests pytest** en verde.
+Estado esperado: **74 tests vitest** y **40 tests pytest** en verde.
 
 Reglas del repositorio:
 

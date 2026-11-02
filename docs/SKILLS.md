@@ -1,6 +1,6 @@
 # Skills incluidas
 
-22 skills en `skills/`, leibles con `retrace_skill_list` y `retrace_skill_read`.
+23 skills en `skills/`, leibles con `retrace_skill_list` y `retrace_skill_read`.
 
 | Skill | Uso |
 | --- | --- |
@@ -26,6 +26,7 @@
 | `emulator-hardware-validation` | Validación PCSX2, goldens, traces y hardware autorizado |
 | `license-provenance` | Licencias, SBOM, procedencia y límites de distribución |
 | `variable-recovery-and-abi` | Variables, structs, tipos y mapeos ABI N64/PS2 |
+| `autonomous-port-pipeline` | Pipeline reanudable, fuentes generadas, ISO y validación con evidencia |
 
 El flujo recomendado y sus fuentes primarias están documentados en
 [`reports/Portabilidad N64 a PS2.md`](../reports/Portabilidad%20N64%20a%20PS2.md).

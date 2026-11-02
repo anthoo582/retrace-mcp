@@ -1,6 +1,6 @@
 # Catalogo de tools (TypeScript)
 
-71 tools registradas en `src/index.ts`. Todas devuelven `{ ok, data|error, evidence }`.
+76 tools registradas en `src/index.ts`. Todas devuelven `{ ok, data|error, evidence }`.
 
 ## Sistema (4)
 `retrace_probe`, `retrace_skill_list`, `retrace_skill_read`, `retrace_limits`.
@@ -57,7 +57,10 @@
 ## Variables y ABI (4)
 `infer_variables`, `infer_structs`, `suggest_variable_names`, `validate_variable_map`.
 
+## Pipeline autónomo (4)
+`port_start`, `port_status`, `port_source_manifest`, `package_ps2_iso`.
+
 ## Politica de escritura
-Solo `decomp_config_apply_changes`, `build_run`, `split_rom`, `ghidra_import`,
-`recompile_rom`, `generate_ps2_project`, `build_ps2` y `audio_decode_file` (con `outPath`)
-escriben. Todas exigen `RETRACE_ALLOW_WRITE=1` y confirmacion explicita.
+Solo las tools con `apply=true`, `confirm=true` o una ruta de salida explícita escriben.
+El pipeline exige `RETRACE_ALLOW_WRITE=1`, conserva el árbol fuente y no crea una ISO
+si no existe un builder real (`mkisofs` o `genisoimage`).
