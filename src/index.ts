@@ -11,6 +11,8 @@ import { registerGraphicsTools } from "./tools/graphics.js";
 import { registerAudioTools } from "./tools/audio.js";
 import { registerDecompTools } from "./tools/decomp.js";
 import { registerGraphTools } from "./tools/graph.js";
+import { registerReportTools } from "./tools/report.js";
+import { registerBuildTools } from "./tools/build.js";
 import { logger } from "./logger.js";
 import { config } from "./config.js";
 
@@ -31,6 +33,8 @@ async function main(): Promise<void> {
   registerAudioTools(server);
   registerDecompTools(server);
   registerGraphTools(server);
+  registerReportTools(server);
+  registerBuildTools(server);
 
   const transport = new StdioServerTransport();
 
@@ -54,3 +58,4 @@ main().catch((error) => {
   console.error("Fatal error starting Retrace MCP:", error);
   process.exit(1);
 });
+

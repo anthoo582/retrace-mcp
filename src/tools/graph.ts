@@ -76,3 +76,4 @@ export function registerGraphTools(server: McpServer): void {
     }
   );
 }
+

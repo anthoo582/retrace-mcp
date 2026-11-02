@@ -8,6 +8,36 @@ import { ok } from "../core/evidence.js";
 export function registerRepoTools(server: McpServer): void {
   registerTool(
     server,
+    "repo_get_architecture",
+    "Summarize the repository architecture from its real files: languages, build systems, binaries, symbol/config files, directory ownership and Git state.",
+    {
+      root: z.string().optional().describe("Root directory to scan (default workspace root)"),
+      maxFiles: z.number().optional().describe("Max files to scan (default configured limit)")
+    },
+    async ({ root, maxFiles }) => {
+      const scanRoot = root ?? config.workspaceRoots[0] ?? ".";
+      const index = await buildRepoIndex(scanRoot, { maxFiles });
+      return ok({
+        root: index.root,
+        generatedAt: index.generatedAt,
+        fileCount: index.fileCount,
+        totalBytes: index.totalBytes,
+        truncated: index.truncated,
+        languages: index.languages,
+        buildSystems: index.buildSystems,
+        binaries: index.binaries,
+        symbolFiles: index.symbolFiles,
+        configFiles: index.configFiles,
+        directories: index.directories,
+        git: index.git,
+        duplicatedGroups: index.duplicatedGroups,
+        largestFiles: index.largestFiles
+      });
+    }
+  );
+
+  registerTool(
+    server,
     "repo_inspect",
     "Inspect the workspace repository: file tree, detected languages, build tools, binary assets and architecture summary.",
     {
@@ -26,6 +56,26 @@ export function registerRepoTools(server: McpServer): void {
         binaries: index.binaries,
         configFiles: index.configFiles
       });
+    }
+  );
+
+  registerTool(
+    server,
+    "repo_find_references",
+    "Find literal references to a symbol or identifier across repository source files without executing project code.",
+    {
+      symbol: z.string().min(1).describe("Symbol or identifier to find"),
+      root: z.string().optional().describe("Root directory to search (default workspace root)"),
+      maxResults: z.number().optional().describe("Max references to return")
+    },
+    async ({ symbol, root, maxResults }) => {
+      const literal = symbol.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const searchRoot = root ?? config.workspaceRoots[0] ?? ".";
+      const result = await searchCode(searchRoot, `\\b${literal}\\b`, {
+        maxResults,
+        caseSensitive: true
+      });
+      return ok({ symbol, count: result.hits.length, hits: result.hits, truncated: result.truncated });
     }
   );
 

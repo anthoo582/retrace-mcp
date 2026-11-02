@@ -30,3 +30,4 @@ Extracción de metadatos, detección de orden de bytes, verificación de checksu
 2. Normalizar la copia de trabajo a Big-Endian (.z64) usando `normalizeToBigEndian`.
 3. Extraer el entry point y comprobar si coincide con el rango KSEG0 (`0x80000000 - 0x807FFFFF`).
 4. Utilizar `rom_find_code_regions` para localizar funciones ejecutables sin necesidad de símbolos previos.
+

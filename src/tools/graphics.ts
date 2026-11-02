@@ -82,3 +82,4 @@ export function registerGraphicsTools(server: McpServer): void {
     }
   );
 }
+

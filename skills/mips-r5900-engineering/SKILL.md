@@ -30,3 +30,4 @@ Ingeniería inversa, desensamblado, depuración y porting de código a la PlaySt
 ## Errores habituales
 - Intentar usar instrucciones R5900 en Big-Endian o asumir compatibilidad binaria con N64.
 - Desalineación de pila menor a 16 bytes al llamar a funciones del PS2SDK o compilar con GCC MIPS64 EE.
+

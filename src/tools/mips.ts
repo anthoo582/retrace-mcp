@@ -52,3 +52,4 @@ export function registerMipsTools(server: McpServer): void {
     }
   );
 }
+

@@ -7,10 +7,10 @@
     { "name": "diag_probe_environment", "domain": "diagnostics", "owner": "analysis", "status": "sidecar-ready", "readOnly": true, "sidecar": "env.probe" },
 
     { "name": "repo_inspect", "domain": "repository", "owner": "core", "status": "planned", "readOnly": true },
-    { "name": "repo_get_architecture", "domain": "repository", "owner": "core", "status": "planned", "readOnly": true },
+    { "name": "repo_get_architecture", "domain": "repository", "owner": "core", "status": "implemented", "readOnly": true },
     { "name": "repo_search_code", "domain": "repository", "owner": "core", "status": "planned", "readOnly": true },
     { "name": "repo_find_dependencies", "domain": "repository", "owner": "core", "status": "planned", "readOnly": true },
-    { "name": "repo_find_references", "domain": "repository", "owner": "core", "status": "planned", "readOnly": true },
+    { "name": "repo_find_references", "domain": "repository", "owner": "core", "status": "implemented", "readOnly": true },
     { "name": "repo_get_build_info", "domain": "repository", "owner": "core", "status": "planned", "readOnly": true },
     { "name": "repo_get_file_history", "domain": "repository", "owner": "core", "status": "planned", "readOnly": true },
 
@@ -77,11 +77,11 @@
     { "name": "decomp_config_propose_changes", "domain": "decomp", "owner": "core", "status": "planned", "readOnly": true },
     { "name": "decomp_config_apply_changes", "domain": "decomp", "owner": "core", "status": "planned", "readOnly": false },
 
-    { "name": "build_analyze", "domain": "build", "owner": "core", "status": "planned", "readOnly": true },
+    { "name": "build_analyze", "domain": "build", "owner": "core", "status": "implemented", "readOnly": true },
     { "name": "build_run", "domain": "build", "owner": "core", "status": "planned", "readOnly": false },
     { "name": "build_compare", "domain": "build", "owner": "core", "status": "planned", "readOnly": true },
     { "name": "emulator_log_analyze", "domain": "build", "owner": "analysis", "status": "planned", "readOnly": true },
     { "name": "regression_test_run", "domain": "build", "owner": "core", "status": "planned", "readOnly": false },
-    { "name": "generate_forensic_report", "domain": "report", "owner": "core", "status": "planned", "readOnly": true }
+    { "name": "generate_forensic_report", "domain": "report", "owner": "core", "status": "implemented", "readOnly": true }
   ]
 }

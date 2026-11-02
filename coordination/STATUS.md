@@ -16,6 +16,10 @@ Owners update this file. One line per tool, only when it is implemented AND test
 | audio_inspect, audio_decode_vag_block | src/audio/formats.ts | ts-core | tests/ts/audio.test.ts |
 | decomp_config_inspect, decomp_config_validate, decomp_config_propose_changes, decomp_config_apply_changes | src/config/decomp.ts | ts-core | tests/ts/decomp.test.ts |
 | graph_node_upsert, graph_edge_upsert, graph_query_neighbors | src/knowledge/graph.ts | ts-core | tests/ts/graph.test.ts |
+| generate_forensic_report | src/reports/report.ts, src/tools/report.ts | codex | tests/ts/report.test.ts |
+| build_analyze | src/build/analysis.ts, src/tools/build.ts | codex | tests/ts/build.test.ts |
+| repo_get_architecture | src/repo/intel.ts, src/tools/repo.ts | codex | tests/ts/repo.test.ts |
+| repo_find_references | src/tools/repo.ts | codex | tests/ts/repo.test.ts |
 
 ## In progress (claim before starting)
 

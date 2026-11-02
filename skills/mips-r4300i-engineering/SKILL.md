@@ -37,3 +37,4 @@ Análisis de ejecutables, desensamblado de código, reconstrucción de funciones
 ## Criterios de validación
 - Toda función reconstruida debe preservar la alineación de pila.
 - Ninguna instrucción de delay slot debe ser movida fuera del bloque de salto.
+

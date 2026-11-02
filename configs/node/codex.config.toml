@@ -7,3 +7,4 @@ cwd = "C:\\Users\\Pixel\\Desktop\\mcp-engenier-ps2-ports"
 [mcp_servers.retrace.env]
 RETRACE_WORKSPACE = "."
 RETRACE_ALLOW_WRITE = "0"
+

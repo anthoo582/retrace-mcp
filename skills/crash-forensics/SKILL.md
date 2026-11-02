@@ -23,3 +23,4 @@ Análisis de reportes de errores de emuladores (PCSX2, Ares, Project64), dumps d
 4. Comprobar el valor del registro base (en este ejemplo `$a0`); si coincide con `BadVAddr - offset`, el puntero base era inválido.
 5. Inspeccionar el grafo de llamadas hacia atrás mediante `$ra` y las palabras de la pila para identificar qué función invocó la operación defectuosa.
 6. Formular hipótesis basadas en evidencias verificables y no en especulaciones.
+

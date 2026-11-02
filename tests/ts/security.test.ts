@@ -14,3 +14,4 @@ describe("security / paths", () => {
     expect(() => resolveInWorkspace(outside)).toThrow(PathSecurityError);
   });
 });
+
