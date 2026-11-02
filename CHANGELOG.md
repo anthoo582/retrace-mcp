@@ -5,6 +5,30 @@ All notable changes to retrace-mcp will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-11-01
+
+### Added
+- `mips_reconstruct_function`: CFG, stack frame, parámetros, loops y pseudo-C heurístico.
+- Motor de comparación N64/PS2 (`compare_functions`, `compare_rank`) con niveles
+  `exact|structural|probable|unknown`; nunca afirma equivalencia confirmada.
+- `equivalence_record` / `equivalence_list`: registro atribuible y con evidencia.
+- `texture_decode_ps2`: deswizzle GS (CT32/CT16/CT16S/T8/T4) y CLUT CSM2.
+- `audio_decode_file`: VAG/VAGi y N64 VADPCM con codebook leído del AIFC.
+- `graph_ingest`: ELF, ROM N64 y tablas de símbolos al Knowledge Graph.
+- `build_run`: allowlist, `shell:false`, timeout y política de escritura.
+- 6 skills nuevas (11 en total) y documentación de arquitectura, tools, integraciones,
+  comparador, grafo, auditoría y roadmap.
+
+### Fixed
+- `retrace_probe` reportaba una versión hardcodeada; ahora usa `src/version.ts`.
+- Tabla N64 ADPCM fija e incorrecta eliminada; el codebook lo define el archivo AIFC.
+- Nibbles del control VADPCM (scale/predictor) y decodificación por vectores de 8.
+- README y conteos de herramientas desactualizados.
+
+### Changed
+- Versión 0.3.0 en `package.json`, servidor MCP y probe.
+- ADR-005: TypeScript es la implementación principal; Python queda como sidecar.
+
 ## [0.2.0] - 2026-11-01
 
 ### Added - Phase 4: Memory Forensics

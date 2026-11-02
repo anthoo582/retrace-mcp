@@ -7,11 +7,12 @@ audio. Permite que un agente de IA investigue un binario, entienda su
 arquitectura, identifique funciones y reconstruya estructuras con evidencia
 verificable.
 
-> **Estado:** v0.2.0. Fase 0 a Fase 6 completas.
-> - Servidor TypeScript (`src/index.ts`): 34 herramientas registradas, Stdio transport, 20 tests vitest pasando.
-> - Servidor Python (`src/retrace_mcp`): 24 herramientas registradas, 40 tests pytest pasando.
+> **Estado:** v0.3.0.
+> - Servidor TypeScript (`src/index.ts`): **47 herramientas** registradas, Stdio transport, **59 tests vitest** pasando.
+> - Sidecar Python (`src/retrace_mcp`): 24 herramientas, 40 tests pytest pasando.
 > - Diagnóstico: `npm run probe` (`scripts/probe.mjs`).
-> - Runtimes probados y verificados: Node.js >= 20 y Python >= 3.10.
+> - Runtimes verificados: Node.js >= 20 y Python >= 3.10.
+> - Decisión de stack: TypeScript es la implementación principal (ADR-005).
 
 ---
 
@@ -19,15 +20,25 @@ verificable.
 
 | Subsistema | Herramientas | Estado |
 |---|---|---|
-| Repository | `repo_inspect`, `repo_search_code`, `repo_get_build_info`, `repo_find_dependencies`, `repo_find_references` | ✅ |
-| ROM (N64) | `rom_identify_format`, `rom_inspect`, `rom_extract_metadata`, `rom_list_segments` | ✅ |
-| ELF (PS2/MIPS) | `elf_inspect`, `elf_list_sections`, `elf_list_segments`, `elf_list_symbols`, `elf_find_function` | ✅ |
-| MIPS | `mips_disassemble` | ✅ |
-| Memoria / crashes | `memory_analyze_dump`, `memory_inspect_region`, `memory_find_pointer`, `memory_check_alignment`, `memory_analyze_overlap`, `crash_analyze`, `crash_resolve_address` | ✅ |
-| Gráficos / audio | planificado | 🚧 |
-| Knowledge graph | planificado | 🚧 |
+| Sistema | `retrace_probe`, `retrace_skill_list`, `retrace_skill_read`, `retrace_limits` | ✅ |
+| Repository | `repo_inspect`, `repo_get_architecture`, `repo_search_code`, `repo_find_references`, `repo_find_dependencies`, `repo_get_file_history` | ✅ |
+| ROM (N64) | `rom_inspect`, `rom_identify_format`, `rom_find_code_regions`, `rom_compare` | ✅ |
+| ELF (PS2/MIPS) | `elf_inspect`, `elf_list_sections`, `elf_list_symbols`, `elf_find_function` | ✅ |
+| MIPS | `mips_disassemble`, `mips_analyze_function`, `mips_reconstruct_function` | ✅ |
+| Comparación N64/PS2 | `compare_functions`, `compare_rank`, `equivalence_record`, `equivalence_list` | ✅ |
+| Memoria / crashes | `memory_inspect_region`, `memory_check_alignment`, `memory_analyze_overlap`, `crash_analyze` | ✅ |
+| Gráficos | `texture_inspect`, `texture_analyze_palette`, `texture_decode_n64`, `texture_decode_ps2` | ✅ |
+| Audio | `audio_inspect`, `audio_decode_vag_block`, `audio_decode_file` | ✅ |
+| Decomp config | `decomp_config_inspect`, `decomp_config_validate`, `decomp_config_propose_changes`, `decomp_config_apply_changes` | ✅ |
+| Knowledge graph | `graph_node_upsert`, `graph_edge_upsert`, `graph_query_neighbors`, `graph_ingest` | ✅ |
+| Reportes / build | `generate_forensic_report`, `build_analyze`, `build_run` | ✅ |
 
-**Total:** 24 herramientas implementadas
+**Total:** 47 herramientas TypeScript implementadas y testeadas.
+
+Documentación: [arquitectura](docs/ARCHITECTURE.md), [tools](docs/TOOLS.md),
+[skills](docs/SKILLS.md), [comparador](docs/COMPARISON_ENGINE.md),
+[grafo](docs/KNOWLEDGE_GRAPH.md), [integraciones](docs/INTEGRATIONS.md),
+[auditoría](docs/AUDIT.md) y [roadmap](docs/ROADMAP.md).
 
 Cada herramienta devuelve un JSON estructurado `{ "ok": true, "data": ... }` o
 `{ "ok": false, "error": { "code", "message" } }`.

@@ -13,13 +13,15 @@ import { registerDecompTools } from "./tools/decomp.js";
 import { registerGraphTools } from "./tools/graph.js";
 import { registerReportTools } from "./tools/report.js";
 import { registerBuildTools } from "./tools/build.js";
+import { registerCompareTools } from "./tools/compare.js";
 import { logger } from "./logger.js";
 import { config } from "./config.js";
+import { VERSION } from "./version.js";
 
 async function main(): Promise<void> {
   const server = new McpServer({
     name: "retrace-mcp",
-    version: "0.2.0"
+    version: VERSION
   });
 
   // Register all engineering subsystems
@@ -35,6 +37,7 @@ async function main(): Promise<void> {
   registerGraphTools(server);
   registerReportTools(server);
   registerBuildTools(server);
+  registerCompareTools(server);
 
   const transport = new StdioServerTransport();
 

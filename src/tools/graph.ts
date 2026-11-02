@@ -2,7 +2,9 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { registerTool } from "./helpers.js";
 import { KnowledgeGraph, KnowledgeNodeType } from "../knowledge/graph.js";
+import { ingestElf, ingestRom, ingestSymbolTable } from "../knowledge/ingest.js";
 import { config } from "../config.js";
+import { readFileCapped, resolveInWorkspace } from "../security/paths.js";
 import { ok } from "../core/evidence.js";
 
 function getGraph(): KnowledgeGraph {
@@ -73,6 +75,32 @@ export function registerGraphTools(server: McpServer): void {
       const graph = getGraph();
       const result = await graph.neighbors(nodeId, depth ?? 1);
       return ok({ nodeId, depth: depth ?? 1, result });
+    }
+  );
+
+  registerTool(
+    server,
+    "graph_ingest",
+    "Ingest an ELF, an N64 ROM, or a symbol table into the Knowledge Graph. Extracts only what is actually parsed; no code is decompiled during ingestion.",
+    {
+      kind: z.enum(["elf", "rom", "symbols"]).describe("Source kind"),
+      path: z.string().optional().describe("Workspace path for elf/rom"),
+      text: z.string().optional().describe("Symbol table text for kind=symbols"),
+      source: z.string().optional().describe("Label for kind=symbols (defaults to 'inline')")
+    },
+    async ({ kind, path: filePath, text, source }) => {
+      const workspace = config.workspaceRoots[0] ?? process.cwd();
+      const graph = getGraph();
+      if (kind === "symbols") {
+        if (!text) throw new Error("kind=symbols requires text");
+        const { table, ...report } = await ingestSymbolTable(graph, workspace, source ?? "inline", text);
+        return ok({ report, symbols: table.symbols.length });
+      }
+      if (!filePath) throw new Error(`kind=${kind} requires path`);
+      const fullPath = resolveInWorkspace(filePath);
+      const buffer = await readFileCapped(fullPath);
+      const report = kind === "elf" ? await ingestElf(graph, workspace, fullPath, buffer) : await ingestRom(graph, workspace, fullPath, buffer);
+      return ok({ report });
     }
   );
 }

@@ -15,14 +15,6 @@ export type AudioInfo = {
   notes: string[];
 };
 
-const N64_ADPCM_TABLE = [
-  0, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 2048, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 2048, 1024, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 2048, 1024, 512, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 4096, 2048, 1024, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-];
-
 export function inspectAudio(buffer: Buffer): AudioInfo {
   const notes: string[] = [];
   if (buffer.length < 4) {
@@ -172,30 +164,6 @@ export function decodeVagAdpcm(data: Buffer): Int16Array {
     }
   }
   return samples;
-}
-
-export function decodeN64AdpcmFrame(frame: Buffer, state: { hist1: number; hist2: number }): Int16Array {
-  if (frame.length < 9) throw new Error("N64 VADPCM frame needs 9 bytes (1 header + 8 data)");
-  const header = frame[0]!;
-  const scale = header & 0x0f;
-  const predictor = (header >> 4) & 0x0f;
-  const output = new Int16Array(16);
-  const base = N64_ADPCM_TABLE[predictor * 16];
-  if (base === undefined) throw new Error(`Invalid VADPCM predictor ${predictor}`);
-  let hist1 = state.hist1;
-  let hist2 = state.hist2;
-  for (let index = 0; index < 16; index += 1) {
-    const byte = frame[1 + Math.floor(index / 2)] ?? 0;
-    const nibble = index % 2 === 0 ? byte >>> 4 : byte & 0x0f;
-    const signed = nibble < 8 ? nibble : nibble - 16;
-    const sample = ((signed << scale) * 2048 + base * hist1 + (base >> 1) * hist2) >> 11;
-    hist2 = hist1;
-    hist1 = sample;
-    output[index] = Math.max(-32768, Math.min(32767, sample));
-  }
-  state.hist1 = hist1;
-  state.hist2 = hist2;
-  return output;
 }
 
 export function compareAudio(a: AudioInfo, b: AudioInfo): {

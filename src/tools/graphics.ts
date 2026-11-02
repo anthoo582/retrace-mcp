@@ -10,6 +10,7 @@ import {
   n64TextureInfo,
   Ps2Psm
 } from "../graphics/texture.js";
+import { decodeGsTexture, type GsPsm } from "../graphics/ps2.js";
 import { ok } from "../core/evidence.js";
 
 export function registerGraphicsTools(server: McpServer): void {
@@ -78,6 +79,38 @@ export function registerGraphicsTools(server: McpServer): void {
         pixelCount: decoded.pixels.length,
         pngBase64: decoded.png.toString("base64"),
         warnings: decoded.warnings
+      });
+    }
+  );
+
+  registerTool(
+    server,
+    "texture_decode_ps2",
+    "Decode a PS2 GS texture (PSMCT32/16/16S, PSMT8/4) from swizzled or linear data, optionally with a CSM2 CLUT, into RGBA and PNG.",
+    {
+      psm: z.enum(["PSMCT32", "PSMCT16", "PSMCT16S", "PSMT8", "PSMT4", "PSMZ32", "PSMZ16", "PSMZ16S"]),
+      width: z.number().int().positive(),
+      height: z.number().int().positive(),
+      dataHex: z.string().describe("Texture bytes as hex"),
+      swizzled: z.boolean().optional().describe("Treat input as GS VRAM (default true)"),
+      clutHex: z.string().optional().describe("32-bit RGBA CLUT entries as hex (required for PSMT8/PSMT4)"),
+      clutStorage: z.enum(["CSM1", "CSM2"]).optional().describe("CLUT storage mode (default CSM2; CSM1 is refused)")
+    },
+    async ({ psm, width, height, dataHex, swizzled, clutHex, clutStorage }) => {
+      const data = Buffer.from(dataHex.replace(/[^0-9a-fA-F]/g, ""), "hex");
+      const clut = clutHex
+        ? { entries: Buffer.from(clutHex.replace(/[^0-9a-fA-F]/g, ""), "hex"), storage: (clutStorage ?? "CSM2") as "CSM1" | "CSM2" }
+        : undefined;
+      const decoded = decodeGsTexture({ psm: psm as GsPsm, width, height, data, swizzled, clut });
+      return ok({
+        psm,
+        width,
+        height,
+        layout: decoded.layout,
+        pixelCount: decoded.pixels.length,
+        pngBase64: decoded.png.toString("base64"),
+        warnings: decoded.warnings,
+        limitations: decoded.limitations
       });
     }
   );

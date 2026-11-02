@@ -3,6 +3,7 @@ import { z } from "zod";
 import { registerTool } from "./helpers.js";
 import { disassemble, MipsArch, Endian } from "../mips/disasm.js";
 import { analyzeFunction } from "../mips/analysis.js";
+import { reconstructFunction } from "../mips/decompile.js";
 import { ok } from "../core/evidence.js";
 
 export function registerMipsTools(server: McpServer): void {
@@ -48,6 +49,39 @@ export function registerMipsTools(server: McpServer): void {
         arch: arch ?? "r4300i",
         instructionsCount: disasm.instructions.length,
         analysis
+      });
+    }
+  );
+
+  registerTool(
+    server,
+    "mips_reconstruct_function",
+    "Reconstruct a function's structure from MIPS instructions: CFG edges, stack frame, saved registers, parameters, loops and heuristic pseudo-C. Never claims to be original source.",
+    {
+      hex: z.string().describe("Hex string of function machine code"),
+      address: z.number().optional().describe("Base virtual address"),
+      arch: z.enum(["r4300i", "r5900"]).optional(),
+      abi: z.enum(["o32", "n64", "ps2"]).optional().describe("Calling convention used for argument/return registers"),
+      name: z.string().optional().describe("Label for the function")
+    },
+    async ({ hex, address, arch, abi, name }) => {
+      const cleanHex = hex.replace(/[^0-9a-fA-F]/g, "");
+      const buffer = Buffer.from(cleanHex, "hex");
+      const baseAddr = address ?? (arch === "r5900" ? 0x00100000 : 0x80000400);
+      const disasm = await disassemble(buffer, baseAddr, { arch: (arch as MipsArch) ?? "r4300i" });
+      const reconstruction = reconstructFunction(disasm.instructions, {
+        name,
+        arch: arch ?? "r4300i",
+        abi: abi ?? (arch === "r5900" ? "ps2" : "o32")
+      });
+      return ok({
+        address: baseAddr,
+        arch: arch ?? "r4300i",
+        reconstruction,
+        notes: [
+          "pseudocodeKind is heuristic-pseudocode: structure inferred from instructions, not recovered source.",
+          "No equivalence with any original function is implied."
+        ]
       });
     }
   );

@@ -20,5 +20,5 @@ Investigación de corrupción visual, canales de color invertidos, artefactos de
 1. **Inversión de Endianness**: Los datos de textura de N64 en Big-Endian leídos directamente por la CPU R5900 o transferidos a GS sin swap provocan texels con colores aleatorios o ruido.
 2. **Interpretación de Alpha**: En N64 RGBA16, el bit de alpha es el bit menos significativo (`value & 1`). En PS2 GS PSMCT16, el bit alfa es el más significativo (`value >> 15`).
 3. **Swizzling de VRAM en PS2**: Las texturas subidas a la memoria de video del GS se reorganizan en bloques según páginas y columnas ("swizzle"). Si se lee linealmente un volcado de VRAM sin des-swizzling, la imagen aparece distorsionada en bloques rectangulares.
-4. **Paletas desalineadas (CLUT)**: En PS2, el orden de las entradas de la CLUT en PSMT8 tiene un patrón de permutación (CSM1) donde los índices 8-15 y 16-23 se intercambian.
+4. **Paletas desalineadas (CLUT)**: En PS2 la CLUT puede usar CSM1 o CSM2. Retrace decodifica solo CSM2 (`texture_decode_ps2`) y rechaza CSM1 con un error explícito: el patrón de permutación no está verificado contra un volcado real y no se debe aproximar.
 

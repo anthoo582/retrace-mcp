@@ -39,3 +39,13 @@ Los fixtures son sintéticos y se generan en `tests/fixtures/generated/` (ignora
 
 Consecuencias: los tests construyen sus propios binarios mínimos; cualquier ejemplo real
 se toma de la máquina del usuario en tiempo de ejecución, nunca se commitea.
+
+## ADR-005 - TypeScript es la implementacion principal; Python queda como sidecar
+
+Decision: el servidor MCP y los motores de analisis viven en `src/*.ts`. El arbol
+`src/retrace_mcp/**` y `src/python/retrace_analysis/**` se mantienen como sidecar de
+analisis (capstone/pyelftools), sin duplicar tools ni convertirse en segundo servidor.
+
+Consecuencias: la funcionalidad nueva se agrega al arbol TypeScript con su test vitest;
+el sidecar se invoca solo cuando aporta una dependencia que TypeScript no cubre. Nadie
+borra el arbol del otro sin una decision explicita del dueno.

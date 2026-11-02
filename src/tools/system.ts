@@ -8,6 +8,7 @@ import { ok } from "../core/evidence.js";
 import { execFile } from "../core/exec.js";
 import { resolveInWorkspace } from "../security/paths.js";
 import { registerTool } from "./helpers.js";
+import { VERSION } from "../version.js";
 
 const SKILLS_DIR = path.resolve(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1")), "../../..", "skills");
 
@@ -57,7 +58,7 @@ export function registerSystemTools(server: McpServer): void {
       }
       const git = await execFile("git", ["--version"], { timeoutMs: 8000 }).catch(() => null);
       return ok({
-        version: "0.1.0",
+        version: VERSION,
         node: process.version,
         platform: `${process.platform}/${process.arch}`,
         transport: config.http ? `stdio + http://${config.http.host}:${config.http.port}${config.http.path}` : "stdio",

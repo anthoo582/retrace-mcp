@@ -20,6 +20,12 @@ Owners update this file. One line per tool, only when it is implemented AND test
 | build_analyze | src/build/analysis.ts, src/tools/build.ts | codex | tests/ts/build.test.ts |
 | repo_get_architecture | src/repo/intel.ts, src/tools/repo.ts | codex | tests/ts/repo.test.ts |
 | repo_find_references | src/tools/repo.ts | codex | tests/ts/repo.test.ts |
+| mips_reconstruct_function | src/mips/decompile.ts, src/tools/mips.ts | ts-core | tests/ts/decompile.test.ts |
+| compare_functions, compare_rank, equivalence_record, equivalence_list | src/compare/engine.ts, src/compare/registry.ts, src/tools/compare.ts | ts-core | tests/ts/compare.test.ts |
+| texture_decode_ps2 | src/graphics/ps2.ts, src/tools/graphics.ts | ts-core | tests/ts/ps2.test.ts |
+| audio_decode_file | src/audio/decode.ts, src/tools/audio.ts | ts-core | tests/ts/audio-decode.test.ts |
+| graph_ingest | src/knowledge/ingest.ts, src/tools/graph.ts | ts-core | tests/ts/ingest.test.ts |
+| build_run | src/build/run.ts, src/tools/build.ts | ts-core | tests/ts/build.test.ts |
 
 ## In progress (claim before starting)
 
